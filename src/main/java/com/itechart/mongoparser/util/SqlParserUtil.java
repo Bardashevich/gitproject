@@ -108,6 +108,7 @@ public class SqlParserUtil {
 
         if (!parsedQuery.getFields().contains(ALL_FIELDS_SYMBOL)) {
             parsedQuery.getFields().forEach(value -> mongoQuery.getProjection().put(value, 1));
+            mongoQuery.getProjection().put("_id", 0);
         }
 
         if(parsedQuery.getWhereStatement() != null) {
