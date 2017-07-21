@@ -1,0 +1,79 @@
+<crm-form-wrapper form-title="vm.title" submit-text="{{workplaceForm.$valid?'Ok':null}}" cancel-text="Cancel"
+                  submit-btn="vm.ok()"
+                  cancel-btn="vm.cancel()" modal="true" ng-form="workplaceForm">
+    <div class="form-group" crm-input-validation>
+        <label for="workplaceName">Name</label>
+        <input ng-model="vm.workplace.name"
+               id="workplaceName"
+               name="workplaceName"
+               class="form-control"
+               required maxlength="255">
+        <span
+            ng-show="workplaceForm.workplaceName.$error.required"
+            class="help-block">Name of workplace is required</span>
+    </div>
+    <div class="form-group" crm-input-validation>
+        <label for="workplacePosition">Position</label>
+        <input ng-model="vm.workplace.position"
+               class="form-control"
+               id="workplacePosition"
+               name="workplacePosition"
+               maxlength="255">
+    </div>
+    <div class="form-group" crm-input-validation>
+        <label for="workplaceStartDate">Start date</label>
+        <p class="input-group">
+            <input ng-model="vm.workplace.startDate"
+                   id="workplaceStartDate"
+                   type="text"
+                   name="workplaceStartDate"
+                   class="form-control"
+                   placeholder="Start date"
+                   uib-datepicker-popup="yyyy-MM-dd"
+                   is-open="vm.parentContext.isDatePickerVisible.workplaceStartDate"
+                   datepicker-options="vm.parentContext.datePickerOptions.workplaceStartDate"
+                   ng-required="true"
+                   close-text="Close"
+                   readonly
+                   required/>
+            <span class="input-group-btn">
+                        <button type="button"
+                                class="btn btn-default"
+                                ng-click="vm.parentContext.showDatePicker(vm.parentContext,'workplaceStartDate')">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+        </p>
+    </div>
+    <div class="form-group" crm-input-validation>
+        <label for="workplaceEndDate">End date</label>
+        <p class="input-group">
+            <input ng-model="vm.workplace.endDate"
+                   type="text"
+                   id="workplaceEndDate"
+                   name="workplaceEndDate"
+                   class="form-control"
+                   placeholder="End date"
+                   uib-datepicker-popup="yyyy-MM-dd"
+                   is-open="vm.parentContext.isDatePickerVisible.workplaceEndDate"
+                   datepicker-options="vm.parentContext.DatePickerOptions.workplaceEndDate"
+                   ng-required="true"
+                   close-text="Close"
+                   alt-input-formats="altInputFormats"
+                   readonly/>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="vm.parentContext.showDatePicker(vm.parentContext,'workplaceEndDate')">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+            </span>
+        </p>
+    </div>
+    <div class="form-group" crm-input-validation>
+        <label for="workplaceComment">Comment</label>
+        <input ng-model="vm.workplace.comment"
+               class="form-control"
+               id="workplaceComment"
+               name="workplaceComment">
+    </div>
+</crm-form-wrapper>

@@ -1,0 +1,13 @@
+<div class="row">
+    <div ng-class="vm.canEdit ? 'col-xs-4 col-sm-8 col-md-9' : 'col-xs-12'">
+        <h4>{{title}}</h4>
+    </div>
+    <div class="col-xs-8 col-sm-4 col-md-3" ng-if="vm.canEdit" role="group">
+        <div class="pull-right">
+            <a class="btn btn-default btn-xs" ng-if="addingFunction" ng-click="addingFunction(vm, $event)" type="button">
+                Add </a>
+            <a class="btn btn-default btn-xs" ng-if="removingFunction" ng-click="removingFunction(vm, $event)" type="button">
+                Remove </a>
+        </div>
+    </div>
+</div>

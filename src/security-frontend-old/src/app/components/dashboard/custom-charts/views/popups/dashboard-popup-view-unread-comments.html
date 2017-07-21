@@ -1,0 +1,40 @@
+<crm-form-wrapper form-title="vm.title" cancel-text="Close"
+                  cancel-btn="vm.cancel()" modal="true">
+        <label for="comment" ng-show="!(vm.context.searchCommentBundle.itemsList.length>0)"> No comments </label>
+        <div ng-show="vm.context.searchCommentBundle.itemsList.length>0">
+            <table class="table table-condensed crm-table-fixed">
+                <thead>
+                <tr>
+                    <th class="crm-hover col-sm-6 col-xs-6">Contact</th>
+                    <th class="crm-hover col-sm-6 col-xs-6">By</th>
+                    <th class="crm-hover col-sm-4 col-xs-6">Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="crm-hover" ng-click="vm.setSelected(vm, comment)" ng-class="{'active': comment.selected}"
+                    ng-repeat="comment in vm.context.searchCommentBundle.itemsList" >
+                    <td>{{comment.contact}}</td>
+                    <td>{{comment.author}}</td>
+                    <td class="hidden-xs">{{comment.date | date:'MMMM dd, yyyy hh:mm a'}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="crm-text-center">
+                <uib-pagination class="pagination-sm" ng-change="vm.onPageChanged(vm)"
+                                ng-model="vm.context.searchCommentBundle.paging.currentPage"
+                                total-items="vm.context.searchCommentBundle.paging.totalCount"
+                                items-per-page="vm.context.searchCommentBundle.paging.itemsPerPage"
+                                max-size="vm.context.searchCommentBundle.paging.visiblePages"
+                                boundary-link-numbers="true" rotate="false">
+                </uib-pagination>
+            </div>
+
+            <div class="form-group">
+                <label for="comment"> Comment: </label>
+                <textarea id="comment" class="form-control crm-comments-popup-textarea-resize"
+                      rows="8"  ng-maxlength="500">{{(vm.text == null) ? vm.context.searchCommentBundle.itemsList[0].text : vm.text}}</textarea>
+            </div>
+        </div>
+
+
+</crm-form-wrapper>

@@ -1,0 +1,43 @@
+<crm-form-wrapper form-title="vm.title" submit-text="{{vm.submitText}}" cancel-text="{{vm.cancelText}}"
+                  submit-btn="vm.submit()"
+                  cancel-btn="vm.cancel()" crm-form-validation="contactForm">
+    <div class="alert alert-danger" ng-show="contactForm.firstName.$dirty && contactForm.firstName.$error.required">
+        First name required!
+    </div>
+    <div class="alert alert-danger" ng-show="contactForm.lastName.$dirty && contactForm.lastName.$error.required">
+        Last name required!
+    </div>
+    <form name="contactForm" class="form-group">
+        <uib-tabset active="active">
+            <uib-tab heading="General Info">
+                <crm-contact-general-info></crm-contact-general-info>
+            </uib-tab>
+
+            <uib-tab heading="Contact Info">
+                <crm-contact-info></crm-contact-info>
+            </uib-tab>
+
+            <uib-tab heading="Work Experience">
+                <crm-contact-work-experience></crm-contact-work-experience>
+            </uib-tab>
+            <uib-tab heading="Education">
+                <crm-contact-education-info></crm-contact-education-info>
+            </uib-tab>
+            <uib-tab heading="Attachments">
+                <div class="crm-top-buffer">
+                    <crm-contact-attachments></crm-contact-attachments>
+                </div>
+            </uib-tab>
+            <uib-tab heading="Comments">
+                <div class="crm-top-buffer">
+                    <crm-contact-comments></crm-contact-comments>
+                </div>
+            </uib-tab>
+            <uib-tab heading="Access">
+                <history-panel ng-show="vm.contact.id" info="vm.contact.history"></history-panel>
+                <acl-form handler="vm.aclHandler"></acl-form>
+            </uib-tab>
+
+        </uib-tabset>
+    </form>
+</crm-form-wrapper>

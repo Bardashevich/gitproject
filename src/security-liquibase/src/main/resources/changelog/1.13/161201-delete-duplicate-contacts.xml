@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="01" author="uladzimir.lakomy">
+        <sql dbms="mysql">
+            SET SQL_SAFE_UPDATES=0;
+
+            UPDATE contact AS a
+            JOIN contact AS b
+            SET a.date_deleted = NOW()
+            WHERE a.id > b.id
+            AND a.firstName = b.firstName
+            AND a.lastName = b.lastName;
+
+            SET SQL_SAFE_UPDATES=1;
+        </sql>
+
+        <rollback>
+            <sql dbms="mysql">
+                SET SQL_SAFE_UPDATES=0;
+
+                UPDATE contact AS a
+                JOIN contact AS b
+                SET a.date_deleted = null
+                WHERE a.id > b.id
+                AND a.firstName = b.firstName
+                AND a.lastName = b.lastName;
+
+                SET SQL_SAFE_UPDATES=1;
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

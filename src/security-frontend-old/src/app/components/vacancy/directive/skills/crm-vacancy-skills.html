@@ -1,0 +1,32 @@
+<div class="panel panel-default " ng-class="vm.details.skill.isEmptySkills(vm)  ? 'crm-has-error' : ''">
+    <div class="panel-heading panel-heading-narrow">
+        <crm-vacancy-table-header title="Skills"
+                                  adding-function="vm.details.skill.add"
+                                  vm="vm"></crm-vacancy-table-header>
+    </div>
+    <div class="panel-body" ng-show="!(vm.details.skill.isEmptySkills(vm))">
+        <div class="crm-skill-container" >
+            <div class="crm-badge btn btn-xs"
+                 ng-repeat="skill in vm.vacancy.vacancySkills | orderBy : ['-required']"
+                 ng-class="skill.required ? 'btn-primary' : 'btn-info'"
+                 ng-click="vm.canEdit ? vm.details.skill.edit(skill, vm) : null"
+                 ng-hide="skill.dateDeleted">
+                {{skill.name}}
+                <span class="crm-badge-x" ng-hide="vm.isTutor()"
+                      ng-click="vm.details.skill.remove(skill, vm); $event.stopPropagation()"></span>
+            </div>
+            <div crm-input-validation>
+                <input id="vacancy-skills"
+                       class="form-control"
+                       name="skills"
+                       ng-model="vm.vacancy.countSkills"
+                       required
+                       readonly
+                       style="display: none"
+                >
+            </div>
+        </div>
+    </div>
+</div>
+<span ng-show="vm.details.skill.isEmptySkills(vm)"
+      ng-class="vm.details.skill.isEmptySkills(vm) ? 'crm-text-error' : ''">Skills required</span>

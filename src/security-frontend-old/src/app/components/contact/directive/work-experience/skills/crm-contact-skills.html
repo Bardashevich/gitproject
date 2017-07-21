@@ -1,0 +1,19 @@
+<div class="panel panel-default" ng-if="vm.canEdit || (!vm.canEdit && vm.contact.skills.length>0)">
+<div class="panel-heading">
+        <crm-contact-table-header title="Skills"
+                                  adding-function="vm.details.skill.add"
+                                  vm="vm"></crm-contact-table-header>
+    </div>
+    <div class="panel-body" ng-show="vm.contact.skills.length > 0">
+        <div style="display: block;padding:0;margin:0">
+            <div class="crm-badge btn btn-info btn-xs"
+                 ng-repeat="skill in vm.contact.skills"
+                 ng-hide="skill.dateDeleted"
+                 ng-click="vm.canEdit ? vm.details.skill.edit(skill, vm) : null">
+                {{skill.name}}
+                <span class="crm-badge-x"
+                      ng-click="vm.details.skill.removeOne(skill, vm); $event.stopPropagation()"></span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,260 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jndi="http://www.springframework.org/schema/jee"
+       xmlns:websocket="http://www.springframework.org/schema/websocket"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		  http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		  http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+
+    <import resource="classpath*:securityServicesContext.xml"/>
+    <import resource="classpath*:businessServicesContext.xml"/>
+
+    <jndi:jndi-lookup id="mailSession" jndi-name="${mail.session.jndi}"/>
+
+    <sec:http pattern="/rest/login" security="none"/>
+    <sec:http pattern="/rest/login/check" security="none"/>
+
+    <sec:http pattern="/rest/**" create-session="stateless" auto-config="false"
+              entry-point-ref="unauthorizedEntryPoint" use-expressions="true">
+        <sec:expression-handler ref="webSecurityExpressionHandler"/>
+        <sec:custom-filter ref="customFilters" position="FORM_LOGIN_FILTER"/>
+
+        <sec:intercept-url pattern="/**" access="hasRole('USER')"/>
+        <sec:csrf disabled="true"/>
+        <sec:remember-me services-ref="rememberMeService" key="${remember.me.key}"/>
+    </sec:http>
+    <sec:authentication-manager id="authenticationManager">
+        <sec:authentication-provider ref="daoAuthenticationProvider"/>
+        <sec:authentication-provider ref="ldapAuthProvider"/>
+        <sec:authentication-provider ref="tokenAuthenticationProvider"/>
+        <sec:authentication-provider ref="rememberMeAuthenticationProvider"/>
+    </sec:authentication-manager>
+
+    <websocket:message-broker application-destination-prefix="/app">
+        <websocket:stomp-endpoint path="/">
+            <websocket:sockjs/>
+        </websocket:stomp-endpoint>
+        <websocket:simple-broker prefix="/topic"/>
+    </websocket:message-broker>
+
+    <bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <constructor-arg index="0" value="${activemq.address}" />
+    </bean>
+
+    <bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <constructor-arg ref="activeMQConnectionFactory" />
+    </bean>
+
+    <bean id="defaultDestination" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0" value="${activemq.queue.name}" />
+    </bean>
+
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="defaultDestination" ref="defaultDestination" />
+    </bean>
+
+    <bean id="ldapService" class="com.itechart.security.web.service.impl.LdapServiceImpl"/>
+
+    <bean id="crmEditor" class="com.itechart.security.web.service.impl.CrmEditorServiceImpl"/>
+
+    <bean id="smgProfileService" class="com.itechart.security.web.service.impl.SmgProfileServiceImpl"/>
+
+    <bean id="jmsMessageSenderService" class="com.itechart.security.web.service.impl.JmsMessageSenderServiceImpl"/>
+
+    <bean id="unauthorizedEntryPoint" class="com.itechart.security.web.security.UnauthorizedEntryPoint"/>
+
+    <bean id="daoAuthenticationProvider"
+          class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="userDetailsService"/>
+        <property name="passwordEncoder" ref="passwordEncoder"/>
+        <property name="userCache" ref="userCache"/>
+    </bean>
+
+
+    <bean id="tokenAuthenticationFilter" class="com.itechart.security.web.security.token.TokenAuthenticationFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="tokenService" ref="tokenService"/>
+    </bean>
+
+    <bean id="tokenAuthenticationProvider" class="com.itechart.security.web.security.token.TokenAuthenticationProvider">
+        <property name="userDetailsService" ref="userDetailsService"/>
+        <property name="tokenService" ref="tokenService"/>
+        <property name="userCache" ref="userCache"/>
+    </bean>
+
+    <bean id="tokenService" class="com.itechart.security.web.security.token.TokenService">
+        <property name="tokenTimeToLive" value="${auth.token.timeToLive}"/>
+    </bean>
+
+    <bean id="notificationService" class="com.itechart.security.web.service.impl.NotificationServiceImpl">
+        <property name="mailService" ref="mailService"/>
+        <property name="notificationProvider" ref="notificationProvider"/>
+        <property name="taskExecutor" ref="mailTaskExecutor"/>
+    </bean>
+
+    <bean id="mailService" class="com.itechart.security.web.service.impl.MailServiceImpl">
+        <property name="mailSender" ref="mailSender"/>
+    </bean>
+
+    <bean id="webSocketService" class="com.itechart.security.web.service.impl.WebSocketServiceImpl"/>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="session" ref="mailSession"/>
+        <property name="defaultEncoding" value="${mail.encoding}"/>
+    </bean>
+
+    <bean id="mailTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="maxPoolSize" value="${mail.sender.threads.max_count}"/>
+    </bean>
+
+    <bean id="notificationProvider" class="com.itechart.security.web.service.impl.NotificationProvider">
+        <property name="freemarkerConfig" ref="freemarkerConfig"/>
+        <property name="subjectSource" ref="notificationSubjectSource"/>
+    </bean>
+
+    <bean id="notificationSubjectSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="${notification.template.dir}/subject"/>
+    </bean>
+
+    <bean id="freemarkerConfig" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+        <property name="defaultEncoding" value="${notification.template.encoding}"/>
+        <property name="templateLoaderPath" value="classpath:/${notification.template.dir}"/>
+    </bean>
+
+
+    <bean id="userCache" class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
+        <property name="cache">
+            <bean class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+                <property name="cacheManager" ref="ehCacheManager"/>
+                <property name="cacheName" value="security.user"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="cacheManagerName" value="appCacheManager"/>
+        <property name="acceptExisting" value="true"/>
+    </bean>
+
+
+    <bean id="fileUtil" class="com.itechart.security.web.util.TempFileUtil"/>
+
+    <bean id="contextSource"
+          class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
+        <constructor-arg value="${ldap.server}"/>
+        <property name="anonymousReadOnly" value="false"/>
+        <property name="baseEnvironmentProperties">
+            <map>
+                <entry key="com.sun.jndi.ldap.connect.timeout" value="5000"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="userSearch"
+          class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
+        <constructor-arg index="0" value=""/>
+        <constructor-arg index="1" value="(userprincipalname={0}@itechart-group.com)"/>
+        <constructor-arg index="2" ref="contextSource"/>
+    </bean>
+
+    <bean id="userDetailsContextMapper" class="com.itechart.security.web.security.ldap.LdapUserDetailsContextMapper"/>
+
+    <bean id="ldapAuthProvider"
+          class="com.itechart.security.web.security.ldap.CustomLdapAuthenticationProvider">
+        <constructor-arg ref="ldapAuthenticator"/>
+        <property name="userDetailsContextMapper"
+                  ref="userDetailsContextMapper"/>
+     </bean>
+
+    <bean id="ldapAuthenticator" class="org.springframework.security.ldap.authentication.BindAuthenticator">
+        <constructor-arg ref="contextSource"/>
+        <property name="userSearch" ref="userSearch"/>
+    </bean>
+
+    <bean id="rememberMeService" class="com.itechart.security.web.security.remember.CustomRememberMeService">
+        <constructor-arg index="0" value="${remember.me.key}"/>
+        <constructor-arg index="1" ref="userDetailsService"/>
+        <property name="cookieName" value="${remember.me.cookie.name}"/>
+        <property name="parameter" value="${remember.me.cookie.name}"/>
+    </bean>
+    <bean id="rememberMeAuthenticationProvider"
+          class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+        <constructor-arg index="0" value="${remember.me.key}"/>
+    </bean>
+    <bean id="rememberMeFilter" class=
+            "org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter">
+        <constructor-arg index="0" ref="authenticationManager"/>
+        <constructor-arg index="1" ref="rememberMeService"/>
+    </bean>
+    <bean id="customFilters" class="org.springframework.web.filter.CompositeFilter">
+        <property name="filters">
+            <list>
+                <ref bean="rememberMeFilter"/>
+                <ref bean="tokenAuthenticationFilter"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="loadProfilesFromSMG" class="com.itechart.security.web.model.scheduling.LoadProfilesFromSMG"/>
+
+    <bean name="complexJobDetail"    class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.itechart.security.web.util.ScheduledJob" />
+        <property name="jobDataMap">
+            <map>
+                <entry key="loadProfilesFromSMG" value-ref="loadProfilesFromSMG" />
+            </map>
+        </property>
+        <property name="durability" value="true" />
+    </bean>
+
+    <!-- For times when you just need to invoke a method on a specific object -->
+    <bean id="loadProfilesFromSmgByStartApplicationJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="loadProfilesFromSMG" />
+        <property name="targetMethod" value="loadProfilesFromSMG" />
+    </bean>
+
+    <!-- Run the job every 2 seconds with initial delay of 1 second -->
+    <bean id="loadProfilesFromSmgByStartApplicationTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="loadProfilesFromSmgByStartApplicationJobDetail" />
+        <property name="startDelay" value="1000" />
+        <property name="repeatCount" value="0" />
+        <property name="repeatInterval" value="100000" />
+    </bean>
+
+    <bean id="cronTrigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="complexJobDetail" />
+        <property name="cronExpression" value="0 0 1 * * ?" />
+    </bean>
+
+    <bean  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobDetails">
+            <list>
+                <ref bean="loadProfilesFromSmgByStartApplicationJobDetail" />
+                <ref bean="complexJobDetail" />
+            </list>
+        </property>
+        <property name="triggers">
+            <list>
+                <ref bean="loadProfilesFromSmgByStartApplicationTrigger" />
+                <ref bean="cronTrigger" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="applicationProperties"
+          class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath*:application.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <context:property-placeholder location="classpath:datasource.properties,classpath:application.properties, classpath:businessServices.properties, classpath:opportunity.properties"
+                                  order="-1"/>
+
+</beans>

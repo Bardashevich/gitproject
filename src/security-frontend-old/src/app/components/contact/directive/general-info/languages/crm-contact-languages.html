@@ -1,0 +1,43 @@
+<div class="panel panel-default" ng-if="vm.canEdit || (!vm.canEdit && vm.contact.languages.length>0)">
+    <div class="panel-heading">
+        <crm-contact-table-header title="Languages"
+                                  adding-function="vm.details.language.add"
+                                  removing-function="vm.details.language.remove"
+                                  vm="vm"></crm-contact-table-header>
+    </div>
+    <table class="table table-condensed crm-table-fixed" ng-show="vm.contact.languages.length>0">
+        <thead>
+        <tr>
+            <th class="crm-narrow">
+                <input type="checkbox"
+                       ng-show="vm.canEdit"
+                       title="select languages"
+                       ng-click="vm.details.checkAll(vm.contact.languages, vm.contact.languages.isSelectedAll)"
+                       ng-model="vm.contact.socialNetworks.isSelectedAll">
+            </th>
+            <th class="col-xs-6">Language</th>
+            <th class="col-xs-4">Language level</th>
+            <th class="col-xs-2"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="language in vm.contact.languages" class="crm-hover">
+            <td>
+                <input ng-model="language.checked"
+                       type="checkbox"
+                       ng-show="vm.canEdit"
+                       title="select languages"
+                       ng-click="vm.details.isAllSelected(vm.contact.languages); $event.stopPropagation()"
+                       ng-init="vm.details.isAllSelected(vm.contact.languages)">
+            </td>
+            <td>{{vm.details.language.getTypeName(language.name,vm.details.language.getLanguages())}}</td>
+            <td>{{vm.details.language.getTypeName(language.level,vm.details.language.getLevels())}}</td>
+            <td>
+                <a ng-show="vm.canEdit" ng-click="vm.details.language.edit(language, vm)"
+                   class="btn btn-default pull-right" style="margin-right: 10px">Edit
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

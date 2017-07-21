@@ -1,0 +1,25 @@
+<crm-form-wrapper form-title="vm.title"
+                  submit-text="{{(languageForm.languageLevel.$dirty)?'Ok':null}}"
+                  cancel-text="Cancel"
+                  submit-btn="(languageForm.languageName.$dirty && languageForm.languageLevel.$dirty) ? vm.ok() : vm.cancel()"
+                  cancel-btn="vm.cancel()" modal="true" ng-form="languageForm">
+
+    <div class="form-group crm-select-validation-icon" crm-input-validation>
+        <label for="languageName">Language</label>
+        <select ng-model="vm.language.name"
+                id="languageName"
+                name="languageName"
+                ng-options="option.value as option.name for option in vm.languageNames"
+                class="form-control">
+        </select>
+    </div>
+    <div class="form-group crm-select-validation-icon" crm-input-validation>
+        <label for="languageLevel">Language Level</label>
+        <select ng-model="vm.language.level"
+                id="languageLevel"
+                name="languageLevel"
+                ng-options="option.value as option.name for option in vm.languageLevels"
+                class="form-control">
+        </select>
+    </div>
+</crm-form-wrapper>

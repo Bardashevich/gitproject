@@ -1,0 +1,45 @@
+<div class="panel panel-default" ng-if="vm.canEdit || (!vm.canEdit && vm.contact.attachments.length>0)">
+<div class="panel-heading">
+        <crm-contact-table-header title="Attachments"
+                                  adding-function="vm.details.attachment.add"
+                                  removing-function="vm.details.attachment.remove"
+                                  vm="vm"></crm-contact-table-header>
+    </div>
+    <table class="table table-condensed crm-table-fixed" ng-show="vm.contact.attachments.length > 0">
+        <thead>
+        <tr>
+            <th class="crm-narrow"><input type="checkbox"
+                       ng-show="vm.canEdit"
+                       title="select Attachments"
+                       ng-click="vm.details.checkAll(vm.contact.attachments, vm.contact.attachments.isSelectedAll)"
+                       ng-model="vm.contact.attachments.isSelectedAll"></th>
+            </th>
+            <th class="col-md-6 col-sm-10 col-xs-12">File</th>
+            <th class="col-md-2 col-sm-2 hidden-xs">Date of upload</th>
+            <th class="col-md-4 hidden-sm hidden-xs">Comment</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="attachment in vm.contact.attachments"
+            ng-hide="attachment.dateDeleted"
+            ng-click="vm.details.attachment.edit(attachment)"
+            class="crm-hover">
+            <td>
+                <input type="checkbox"
+                       ng-model="attachment.checked"
+                       ng-show="vm.canEdit"
+                       title="select Attachment"
+                       ng-click="vm.details.isAllSelected(vm.contact.attachments); $event.stopPropagation()"
+                       ng-init="vm.details.isAllSelected(vm.contact.attachments)">
+            </td>
+            <td class="crm-table-fixed">
+                <a ng-if="attachment.id"
+                   ng-click="vm.details.attachment.get(vm.contact.id, attachment); $event.stopPropagation()">{{attachment.name}}</a>
+                <span ng-if="!attachment.id">{{attachment.name}}</span>
+            </td>
+            <td class="hidden-xs">{{attachment.dateUpload | date:'yyyy-MM-dd'}}</td>
+            <td class="hidden-sm hidden-xs">{{attachment.comment}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

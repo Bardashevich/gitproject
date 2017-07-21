@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--PRINCIPALS-->
+    <changeSet id="01" author="artsiom.marenau">
+        <sql dbms="mysql">
+            INSERT IGNORE INTO principal(id) VALUES(8);
+            INSERT IGNORE INTO principal(id) VALUES(9);
+            INSERT IGNORE INTO principal(id) VALUES(10);
+            INSERT IGNORE INTO principal(id) VALUES(11);
+            INSERT IGNORE INTO principal(id) VALUES(12);
+            INSERT IGNORE INTO principal(id) VALUES(13);
+        </sql>
+    </changeSet>
+
+    <!--GROUPS-->
+    <changeSet id="02" author="artsiom.marenau">
+        <sql dbms="mysql">
+            INSERT IGNORE INTO `group`(id,name,description) VALUES(8,'HRs','HRs group');
+            INSERT IGNORE INTO `group`(id,name,description) VALUES(9,'D1','D1 group');
+        </sql>
+    </changeSet>
+
+    <!--ROLES-->
+    <changeSet id="03" author="artsiom.marenau">
+
+        <sql dbms="mysql">
+            INSERT IGNORE INTO role(id,name,description,parent_id) VALUES(5,'STUDENT','STUDENT ROLE',1);
+            INSERT IGNORE INTO role(id,name,description,parent_id) VALUES(6,'HR','HR ROLE',1);
+            INSERT IGNORE INTO role(id,name,description,parent_id) VALUES(7,'DEPARTMENT_MANAGER','DEPARTMENT_MANAGER ROLE',1);
+            INSERT IGNORE INTO role(id,name,description,parent_id) VALUES(8,'TUTOR','TUTOR ROLE',1);
+        </sql>
+    </changeSet>
+
+    <!--USERS-->
+    <changeSet id="04" author="artsiom.marenau" failOnError="false">
+        <sql dbms="mysql">
+            INSERT IGNORE INTO user(id,user_name,password,first_name,last_name,email,active) VALUES(10,'sergey.skiba','$2a$10$6VyV2pv2Ju9H9wZPjN/Am.qOp/5MzReBpGfhZ9BoQ.rFNeMgQdApW','Sergey','Skiba','Siarhei.Skiba@itechart-group.com',1);
+            INSERT IGNORE INTO user(id,user_name,password,first_name,last_name,email,active) VALUES(11,'gennady.novik','$2a$10$aavbGKWGLsnRTtF34dSSguxn7nSbjXGZohnPTHfJLqWnCvBAaWlSS','Gennady','Novik','gennady.novik@itechart-group.com',1);
+            INSERT IGNORE INTO user(id,user_name,password,first_name,last_name,email,active) VALUES(12,'anton.nekrasov','$2a$10$Evo39qQ/5Qv7BMnhHI/TYeWW8I0DiZWmxC8kFhmr5Id4qSazr6PZq','Anton','Nekrasov','Anton.Nekrasov@itechart-group.com',1);
+            INSERT IGNORE INTO user(id,user_name,password,first_name,last_name,email,active) VALUES(13,'yana.berkina','$2a$10$rxfw8hfA9TVYhBDJ9iSCFec72SqC0Cccb0JK2hQsC8l3oYXMIJ/j.','Yana','Berkina','Yana.Berkina@itechart-group.com',1);
+        </sql>
+    </changeSet>
+
+    <!--USERS ROLES-->
+    <changeSet id="05" author="artsiom.marenau" failOnError="false">
+        <sql dbms="mysql">
+            INSERT IGNORE INTO user_role(user_id,role_id) VALUES(10,3);
+            INSERT IGNORE INTO user_role(user_id,role_id) VALUES(10,7);
+            INSERT IGNORE INTO user_role(user_id,role_id) VALUES(11,3);
+            INSERT IGNORE INTO user_role(user_id,role_id) VALUES(11,8);
+            INSERT IGNORE INTO user_role(user_id,role_id) VALUES(12,3);
+            INSERT IGNORE INTO user_role(user_id,role_id) VALUES(12,8);
+            INSERT IGNORE INTO user_role(user_id,role_id) VALUES(13,3);
+            INSERT IGNORE INTO user_role(user_id,role_id) VALUES(13,6);
+        </sql>
+    </changeSet>
+
+    <!--USERS GROUPS-->
+    <changeSet id="06" author="artsiom.marenau"  failOnError="false">
+        <sql dbms="mysql">
+            INSERT IGNORE INTO user_group(user_id,group_id) VALUES(10,9);
+            INSERT IGNORE INTO user_group(user_id,group_id) VALUES(10,5);
+            INSERT IGNORE INTO user_group(user_id,group_id) VALUES(11,9);
+            INSERT IGNORE INTO user_group(user_id,group_id) VALUES(12,9);
+            INSERT IGNORE INTO user_group(user_id,group_id) VALUES(13,9);
+            INSERT IGNORE INTO user_group(user_id,group_id) VALUES(13,8);
+        </sql>
+    </changeSet>
+
+    <!--ROLE_PRIVILEGE-->
+    <changeSet id="07" author="artsiom.marenau" failOnError="false">
+        <sql dbms="mysql">
+            <!--FOR  TUTOR-->
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(8,1);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(8,2);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(8,3);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(8,4);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(8,13);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(8,14);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(8,15);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(8,16);
+
+            <!--FOR DEP_MANAGER-->
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(7,1);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(7,2);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(7,3);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(7,4);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(7,5);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(7,6);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(7,7);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(7,8);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(7,9);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(7,10);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(7,11);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(7,12);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(7,13);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(7,14);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(7,15);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(7,16);
+
+            <!--FOR HR-->
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(6,1);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(6,2);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(6,3);
+            INSERT IGNORE INTO role_privilege(role_id,privilege_id) VALUES(6,4);
+        </sql>
+    </changeSet>
+
+    <!--USER DEFAULT ACL-->
+    <changeSet id="08" author="artsiom.marenau" failOnError="false">
+        <sql dbms="mysql">
+            INSERT IGNORE INTO user_default_acl(id,user_id,principal_id,permission_mask) VALUES(1,10,10,31);
+            INSERT IGNORE INTO user_default_acl(id,user_id,principal_id,permission_mask) VALUES(2,11,9,31);
+            INSERT IGNORE INTO user_default_acl(id,user_id,principal_id,permission_mask) VALUES(3,12,9,31);
+            INSERT IGNORE INTO user_default_acl(id,user_id,principal_id,permission_mask) VALUES(4,13,8,31);
+            INSERT IGNORE INTO user_default_acl(id,user_id,principal_id,permission_mask) VALUES(5,13,9,1);
+            INSERT IGNORE INTO user_default_acl(id,user_id,principal_id,permission_mask) VALUES(6,10,6,15);
+        </sql>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,17 @@
+<crm-form-wrapper form-title="vm.title" submit-text="{{vm.submitText}}" cancel-text="{{vm.cancelText}}"
+                  submit-btn="vm.submit()"
+                  cancel-btn="vm.cancel()"
+                  crm-form-validation="vacancyForm">
+    <form name="vacancyForm" class="form-group">
+        <uib-tabset active="active">
+            <uib-tab heading="General Info">
+                <crm-vacancy-general-info></crm-vacancy-general-info>
+            </uib-tab>
+
+            <uib-tab heading="Candidates" ng-if="vm.vacancy.id">
+                <crm-vacancy-opportunities data-vacancy="vm.vacancy"></crm-vacancy-opportunities>
+            </uib-tab>
+
+        </uib-tabset>
+    </form>
+</crm-form-wrapper>

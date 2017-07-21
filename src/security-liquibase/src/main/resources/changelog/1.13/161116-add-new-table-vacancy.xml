@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="01" author="artsiom.marenau">
+        <createTable tableName="vacancy">
+            <column autoIncrement="true" name="id" remarks="Vacancy identifier" type="BIGINT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="position_name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="responsibilities" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salary_min" type="INT"/>
+            <column name="salary_max" type="INT"/>
+            <column name="education_type" type="VARCHAR(20)"/>
+            <column name="specialization" type="VARCHAR(50)"/>
+            <column name="open_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="close_date" type="DATE"/>
+            <column name="comment" type="VARCHAR(500)"/>
+            <column name="foreign_language" type="VARCHAR(20)"/>
+            <column name="language_level" type="VARCHAR(20)"/>
+            <column name="experience_min" type="INT(2)"/>
+            <column name="experience_max" type="INT(2)"/>
+            <column name="hr_id" type="BIGINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creator_id" type="BIGINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="vacancy_skill">
+            <column autoIncrement="true" name="id" remarks="Vacancy skill identifier" type="BIGINT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="vacancy_id" type="BIGINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="required" type="BIT(1)"/>
+        </createTable>
+        <!--auto rollback-->
+    </changeSet>
+
+    <changeSet id="02" author="artsiom.marenau">
+        <addForeignKeyConstraint baseColumnNames="hr_id" baseTableName="vacancy"
+                                 referencedColumnNames="id" referencedTableName="contact"
+                                 constraintName="fk_hr_id_contact_id"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+        <addForeignKeyConstraint baseColumnNames="creator_id" baseTableName="vacancy"
+                                 referencedColumnNames="id" referencedTableName="contact"
+                                 constraintName="fk_creator_id_contact_id"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+        <addForeignKeyConstraint baseColumnNames="vacancy_id" baseTableName="vacancy_skill"
+                                 referencedColumnNames="id" referencedTableName="vacancy"
+                                 constraintName="fk_skill_id_vacancy_id"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+        <!--auto rollback-->
+    </changeSet>
+</databaseChangeLog>

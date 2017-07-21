@@ -1,0 +1,139 @@
+<card [show]="showCard">
+    <div class="card-content">
+        <div class="card-header" *ngIf="!isAnyChecked()">
+            <span class="card-title">Addresses</span>
+
+            <div class="action">
+                <a class="waves-effect btn-flat" (click)="add()">
+                    <i class="material-icons">add</i>
+                </a>
+                <a class="waves-effect btn-flat" *ngIf="isData() || removed.length" (click)="toggleEditMode()">
+                    <i class="material-icons" [ngClass]="{success: editMode}">mode_edit</i>
+                </a>
+                <a class="waves-effect btn-flat" *ngIf="!(isData() || removed.length)" (click)="removeCard.emit(6)">
+                    <i class="material-icons">clear</i>
+                </a>
+            </div>
+        </div>
+        <div class="card-header contextual-header" *ngIf="isAnyChecked()">
+            <span class="card-title">{{countSelectedItems}} item(s) selected</span>
+
+            <div class="action">
+                <a class="waves-effect btn-flat" (click)="remove()">
+                    <i class="material-icons">delete</i>
+                </a>
+            </div>
+        </div>
+
+        <div class="card-table">
+            <form #contactAddressForm="ngForm">
+                <table class="highlight" *ngIf="isData()">
+                    <thead>
+                    <tr>
+                        <th style="width: 40px" *ngIf="editMode"></th>
+                        <th style="width: 20%;">
+                            Country
+                        </th>
+                        <th style="width: 20%;">
+                            Region
+                        </th>
+                        <th style="width: 20%;">
+                            City
+                        </th>
+                        <th style="width: 30%;">
+                            Address line
+                        </th>
+                        <th style="width: 10%;">
+                            Zipcode
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr [ngClass]="{'selected': address.selected}"
+                        *ngFor="let address of contact.addresses; let i = index">
+                        <td *ngIf="editMode">
+                            <p>
+                                <input type="checkbox"
+                                       class="filled-in sm"
+                                       [id]="'contact-address-select-' + i"
+                                       [name]="'contactAddressSelect' + i"
+                                       [checked]="address.selected"
+                                       [(ngModel)]="address.selected">
+                                <label [attr.for]="'contact-address-select-' + i"></label>
+                            </p>
+                        </td>
+                        <td>
+                            <select materialize="material_select"
+                                    [name]="'contactAddressCountry' + i"
+                                    [(ngModel)]="address.country"
+                                    [materializeSelectOptions]="countries"
+                                    required>
+                                <option value="" disabled selected>Country</option>
+                                <option *ngFor="let option of countries" [value]="option | optionPipe: 'id'">{{option | optionPipe: 'value'}}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="input-field">
+                                <input class="validate"
+                                       [id]="'contact-address-region-' + i"
+                                       [name]="'contactAddressRegion' + i"
+                                       type="text"
+                                       [(ngModel)]="address.region"
+                                       placeholder="Region"
+                                       required>
+                                <label [attr.for]="'contact-address-region-' + i"
+                                       data-error="This field is required."></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-field">
+                                <input class="validate"
+                                       [id]="'contact-address-city-' + i"
+                                       [name]="'contactAddressCity' + i"
+                                       type="text"
+                                       [(ngModel)]="address.city"
+                                       placeholder="City"
+                                       required>
+                                <label [attr.for]="'contact-address-city-' + i"
+                                       data-error="This field is required."></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-field">
+                                <input class="validate"
+                                       [id]="'contact-address-address-line-' + i"
+                                       [name]="'contactAddressAddressLine' + i"
+                                       type="text"
+                                       [(ngModel)]="address.addressLine"
+                                       placeholder="Address line"
+                                       required>
+                                <label [attr.for]="'contact-address-address-line-' + i"
+                                       data-error="This field is required."></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-field">
+                                <input class="validate"
+                                       [id]="'contact-address-zipcode-' + i"
+                                       [name]="'contactAddressZipcode' + i"
+                                       type="text"
+                                       [(ngModel)]="address.zipcode"
+                                       placeholder="Zipcode"
+                                       required>
+                                <label [attr.for]="'contact-address-zipcode-' + i"
+                                       data-error="This field is required."></label>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <div class="card-action" [@toggle]="any"
+         *ngIf="contact.id && contactAddressForm.valid && (isAnyDirty(contactAddressForm) || removed.length)">
+        <a (click)="save()">Save</a>
+    </div>
+</card>

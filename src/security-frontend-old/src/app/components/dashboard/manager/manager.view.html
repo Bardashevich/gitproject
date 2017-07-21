@@ -1,0 +1,25 @@
+<div class="page-header">
+    <a class="btn btn-success pull-right crm-margined" ng-click="vm.viewDashboards()">
+        Save Dashboard
+    </a>
+    <a class="btn btn-default pull-right crm-margined" ng-click="vm.restoreToDefaultManageDashboards()">
+        Restore to default
+    </a>
+    <h4>Dashboard manager</h4>
+</div>
+<div class="row crm-bottom-buffer">
+    <div class="col-xs-12">
+        <div gridster>
+            <ul>
+                <li ng-repeat="item in vm.managerGridsterItems"  gridster-item="item.config">
+                    <crm-chart-wrapper panel-style="item.panelStyle" panel-title="item.panelTitle"
+                                       open-button="vm.openDash(item)"
+                                       close-button="vm.closeManagerDash(item)">
+                        <highchart config="item.chartConfig" ng-show="item.chartConfig"></highchart>
+                        <div ng-show="item.customData" ng-include="item.customData"></div>
+                    </crm-chart-wrapper>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

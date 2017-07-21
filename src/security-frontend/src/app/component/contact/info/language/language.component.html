@@ -1,0 +1,81 @@
+<card [show]="showCard">
+    <div class="card-content">
+        <div class="card-header" *ngIf="!isAnyChecked()">
+            <span class="card-title">Languages</span>
+
+            <div class="action">
+                <a class="waves-effect btn-flat"
+                   (click)="add()">
+                    <i class="material-icons">add</i>
+                </a>
+                <a class="waves-effect btn-flat" *ngIf="isData() || removed.length"
+                   (click)="toggleEditMode()">
+                    <i class="material-icons" [ngClass]="{success: editMode}">mode_edit</i>
+                </a>
+                <a class="waves-effect btn-flat" *ngIf="!(isData() || removed.length)"
+                   (click)="removeCard.emit(1)">
+                    <i class="material-icons">clear</i>
+                </a>
+            </div>
+        </div>
+        <div class="card-header contextual-header" *ngIf="isAnyChecked()">
+            <span class="card-title">{{countSelectedItems}} item(s) selected</span>
+
+            <div class="action">
+                <a class="waves-effect btn-flat" (click)="remove()">
+                    <i class="material-icons">delete</i>
+                </a>
+            </div>
+        </div>
+
+        <div class="card-table">
+            <form #contactLanguageForm="ngForm">
+                <table class="highlight" *ngIf="isData()">
+                    <tbody>
+                    <tr [ngClass]="{'selected': language.selected}"
+                        *ngFor="let language of contact.languages; let i = index">
+                        <td style="width: 40px;" *ngIf="editMode">
+                            <p>
+                                <input type="checkbox"
+                                       class="filled-in sm"
+                                       [id]="'contact-language-select-' + i"
+                                       [name]="'contactLanguageSelect' + i"
+                                       [checked]="language.selected"
+                                       [(ngModel)]="language.selected">
+                                <label [attr.for]="'contact-language-select-' + i"></label>
+                            </p>
+                        </td>
+                        <td>
+                            <select materialize="material_select"
+                                    [name]="'contactLanguage' + i"
+                                    [(ngModel)]="language.name"
+                                    [materializeSelectOptions]="languages"
+                                    required>
+                                <option value="" disabled selected>Language</option>
+                                <option *ngFor="let option of languages" [value]="option | optionPipe: 'id'">{{option | optionPipe: 'value'}}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select materialize="material_select"
+                                    [name]="'contactLevel' + i"
+                                    [(ngModel)]="language.level"
+                                    [materializeSelectOptions]="levels"
+                                    required>
+                                <option value="" disabled selected>Level</option>
+                                <option *ngFor="let option of levels" [value]="option | optionPipe: 'id'">{{option | optionPipe: 'value'}}
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <div class="card-action" [@toggle]="any"
+         *ngIf="contact.id && contactLanguageForm.valid && (isAnyDirty(contactLanguageForm) || removed.length)">
+        <a (click)="save()">Save</a>
+    </div>
+</card>

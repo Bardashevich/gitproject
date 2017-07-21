@@ -1,0 +1,52 @@
+.icon--small {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+
+.icon--user {
+    background: url("../assets/icons/user.svg");
+}
+
+.icon--user-group {
+    background: url("../assets/icons/group.svg");
+}
+
+.icon--user-group-add {
+    background: url("../assets/icons/group-add.svg");
+}
+
+.crm-select-validation-icon .form-control-feedback {
+    right: 3%;
+}
+
+.table thead > tr > th.crm-narrow {
+    width: 22px;
+}
+
+.table.crm-table-fixed {
+    table-layout: fixed;
+}
+
+.table.crm-table-fixed tbody > tr > td,
+.table.crm-table-fixed thead > tr > th,
+.crm-text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.crm-badge {
+    margin: 2px;
+}
+
+.crm-badge-x {
+    color: lightgrey;
+}
+
+.crm-badge-x:hover {
+    color: red;
+}
+
+.crm-badge-x::after {
+    content: '✖	';
+}

@@ -1,0 +1,146 @@
+<div class="row">
+    <div class="form-group linkedInAccountForm" ng-if="!vm.linkedInCookiesStr" id="linkedInLogindWrapp">
+        <label for="linkedInLogin">Login</label>
+        <input id="linkedInLogin" class="form-control linkedInAccountInputs"
+               name="institution"
+               ng-model="vm.linkedInAccount.login" required>
+    </div>
+    <div class="form-group linkedInAccountForm" id="linkedInPasswordWrapp" ng-if="!vm.linkedInCookiesStr">
+        <label for="linkedInPassword">Password</label>
+        <input id="linkedInPassword" class="form-control linkedInAccountInputs"
+               name="institution"
+               type="password"
+               ng-model="vm.linkedInAccount.password" required>
+    </div>
+    <div class="col-xs-6 col-md-4" id="linkedInAccountAuthentificat" ng-class="vm.linkedInCookiesStr ? 'linkedInAccountButtonPosition pull-right' : ''">
+        <div>
+            <a class="btn btn-primary linkedin-search-button"
+               crm-custom-submit="vm.logInLogOutLinkedIn()">
+                {{ vm.linkedInCookiesStr ? "Log Out LinkedIn" : "Log In LinkedIn"}}
+            </a>
+        </div>
+    </div>
+</div>
+<div ng-if="vm.linkedInAuthentificationMessage" class="linkedInSearchErrorMessage">{{vm.linkedInAuthentificationMessage}}</div>
+
+<form name="linkedInSearchForm" class="form-group">
+    <div class="form-group linkedInSearchForm linkedin-search-form-input-container">
+        <label for="linkedi-search-form-key-words">Skills</label>
+        <input id="linkedi-search-form-key-words" class="form-control"
+               name="keyWords"
+               ng-model="vm.linkedInSearch.keyWords" required>
+    </div>
+    <div class="form-group linkedInSearchForm linkedin-search-form-input-container" >
+        <label for="linkedi-search-form-position">Position</label>
+        <input id="linkedi-search-form-position" class="form-control linkedin-search-form-input"
+               name="position"
+               ng-model="vm.linkedInSearch.position" required>
+    </div>
+    <div class="form-group linkedInSearchForm linkedin-search-form-input-container" >
+        <label for="linkedi-search-form-company">Company</label>
+        <input id="linkedi-search-form-company" class="form-control linkedin-search-form-input"
+               name="company"
+               ng-model="vm.linkedInSearch.company" required>
+    </div>
+    <div class="form-group linkedInSearchForm linkedin-search-form-input-container" >
+        <label for="linkedi-search-form-institution">Institution</label>
+        <input id="linkedi-search-form-institution" class="form-control linkedin-search-form-input"
+               name="institution"
+               ng-model="vm.linkedInSearch.institution" required>
+    </div>
+    <div class="form-group linkedInSearchForm linkedin-search-form-input-container">
+        <label for="linkedi-search-form-location">Location</label>
+        <select ng-model="vm.selectedLocation"
+                ng-options="x.name for x in vm.locations track by x.id"
+                ng-init="vm.location.name"
+                id="linkedi-search-form-location"
+                class="form-control" name="location">
+        </select>
+    </div>
+</form>
+
+<div class="row linkedInSearchForm">
+    <div class="col-xs-6 col-md-4 pull-left" id="linkedin-search-button-wraper">
+        <div class="form-group">
+            <a class="btn btn-primary linkedin-search-button"ng-class="vm.linkedInCookiesStr ? '' : 'linkedin-button-disabled'"
+               crm-custom-submit="vm.searchBtn()">
+               Search
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Results of search -->
+<div class="row linkedInSearchForm">
+    <div class="col-md-12" id = "linkedin-search-result-container">
+        <ul class="linkedin-results">
+            <li class="linkedin-result-item" ng-repeat="contact in vm.searchResult">
+                <a class="linkedin-result-image" ng-href="{{contact.profileUri}}" target="_blank"><img ng-src="{{contact.imageUri}}" class="rounded-linkedin-contact-image"/></a>
+                <div class="linkedt-result-item-data">
+                    <div>
+                        <h3 class="linkedin-user-name">
+                            <a class="title" ng-href="{{contact.profileUri}}">{{(contact.firstname=="" &&  contact.lastName == "") ? "LinkedIn Member" : contact.firstname + " " + contact.lastName}}</a>
+                        </h3>
+                        <div ng-if="contact.status=='CONSIDER'" class="is-candidat-accepted">&#10004;</div>
+                        <div ng-if="contact.status=='SKIP'" class="is-candidat-rejected">&#10006;</div>
+                    </div>
+                    <div class="description" ng-bind-html="contact.position"></div>
+                    <dl class="demographic">
+                        <dt>Location</dt>
+                        <dd class="separator">
+                            <bdi dir="ltr">{{contact.location}}</bdi><div class="point-separator">&middot;</div>
+                        </dd>
+                        <dt>Industry</dt>
+                        <dd class="secondary-dd">{{contact.industry}}</dd>
+                    </dl>
+                    <div class="related-wrapper collapsed">
+                        <ul class="related-line"></ul>
+                    </div>
+                    <dl class="snippets">
+                        <div ng-repeat="snippet in contact.snippets">
+                            <div class="snippet">
+                                <dt class="snippet-name">{{snippet.fieldName + ":"}}</dt>
+                                <dd class="snippet-data">
+                                    <p class="snippet-value" ng-if="snippet.heading" ng-bind-html="snippet.heading"></p>
+                                    <p ng-if="snippet.body" ng-bind-html="snippet.body"></p>
+                                </dd>
+                            </div>
+                        </div>
+                    </dl>
+
+                </div>
+                <div ng-init="statuses = vm.getActiveOpportunityStatuses('NEW')">
+                    <div class="action-button" ng-repeat="status in statuses" ng-if="!contact.status">
+                        <div class="col-xs-6 col-md-4 pull-left">
+                            <div class="btn-group form-group">
+                                <a class="btn btn-primary opportunity-action-button"
+                                   crm-custom-submit="vm.actionOpportunity(contact,status.id,vm.vacancy.id)">
+                                    {{status.name}}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="reject_reason" type="text" ng-model="contact.reasons" ng-if="!contact.status"/>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- End of Results of search -->
+
+
+<div ng-if="vm.nextLink" class="row">
+    <div class="col-xs-6 col-md-4 pull-left" id="next-linkedin-search-button-wraper">
+        <div class="form-group">
+            <a class="btn btn-primary linkedin-next-search-button"
+               crm-custom-submit="vm.searchNext()">
+                Next Results
+            </a>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="vm.cancel()">
+        Cancel
+    </button>
+</div>

@@ -1,0 +1,9 @@
+<div class="information-header {{vm.uniqueId}}">
+    <button type="button" class="close" ng-click="vm.close()" class="pull-right">&times;</button>
+    <h4 class="modal-title">New comment</h4>
+</div>
+<div class="modal-body information-body" ng-click="vm.bodyClick()">
+    <p><b>From:</b> {{vm.author}}<small>{{vm.date | date:'MMMM dd, hh:mm a'}}</small></p>
+    <p><b>To:</b>{{vm.student}}</p>
+    <p class="information-text-comment">{{vm.newComment}}</p>
+</div>

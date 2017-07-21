@@ -1,0 +1,33 @@
+<crm-form-wrapper form-title="vm.title"
+                  submit-text="{{skillForm.$valid?'Ok':null}}"
+                  cancel-text="Cancel"
+                  submit-btn="vm.ok()"
+                  cancel-btn="vm.cancel()"
+                  modal="true"
+                  ng-form="skillForm" >
+    <div class="row">
+        <div class="col-xs-10">
+            <div class="form-group" crm-input-validation>
+                <label for="skill" class="control-label">Skill name</label>
+                <input ng-model="vm.skill.name"
+                       id="skill"
+                       name="skill"
+                       class="form-control"
+                       ng-keyup="(($event.keyCode == 13) && (skillForm.$valid)) ? vm.ok() : null"
+                       required>
+                <span
+                    ng-show="skillForm.skill.$error.required"
+                    class="help-block">
+                         Skill name is required
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-2">
+            <div class="form-group">
+                <label for="skill-required" class="control-label">Required</label>
+                <input id="skill-required" class="checkbox crm-checkbox-large" type="checkbox" ng-model="vm.skill.required">
+            </div>
+        </div>
+    </div>
+
+</crm-form-wrapper>

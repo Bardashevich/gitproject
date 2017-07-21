@@ -1,0 +1,28 @@
+<div class="page-header">
+    <div class="pull-right">
+        <div class="crm-dashboard-period btn btn-default" ng-click="vm.changeVisiblePeriod()">
+           {{ vm.dashboardPeriod.start | date : '  MMM dd, yyyy ' }} - {{ vm.dashboardPeriod.end | date : ' MMM dd, yyyy' }}
+        </div>
+        <a ng-click="vm.manageDashboards()">
+            <i class="glyphicon glyphicon-cog crm-dashboard-cog"></i>
+        </a>
+    </div>
+
+    <h4>Dashboard</h4>
+</div>
+<div class="row crm-bottom-buffer">
+    <div class="col-xs-12">
+        <div gridster>
+            <ul>
+                <li ng-repeat="item in vm.gridsterItems" ng-show="item.visible" gridster-item="item.config">
+                    <crm-chart-wrapper panel-style="item.panelStyle" panel-title="item.panelTitle" close-button="vm.closeDash(item)" dash-name="item.dashName" add-button="vm.addStudent()">
+                        <div ng-show="item.chartConfig">
+                            <highchart config="item.chartConfig"></highchart>
+                        </div>
+                        <div ng-show="item.customData" ng-include="item.customData"></div>
+                    </crm-chart-wrapper>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

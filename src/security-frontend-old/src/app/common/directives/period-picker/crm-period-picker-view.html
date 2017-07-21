@@ -1,0 +1,25 @@
+<crm-form-wrapper
+    form-title="'Select a period'"
+    submit-text="Ok"
+    cancel-text="Cancel"
+    submit-btn="vm.ok()"
+    cancel-btn="vm.cancel()"
+    modal="true"
+    ng-form="periodForm"
+>
+    <div class="row">
+        <div class="col-xs-12">
+            <h4>Selected period: from {{vm.startDate | date : '  MMM dd, yyyy '}} to {{vm.endDate | date : '  MMM dd, yyyy '}} </h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <div uib-datepicker ng-model="vm.startDate" class="well well-sm" datepicker-options="vm.periodStartOptions"></div>
+        </div>
+        <div class="col-xs-6">
+            <div uib-datepicker ng-model="vm.endDate" class="well well-sm" datepicker-options="vm.periodEndOptions"></div>
+        </div>
+    </div>
+
+</crm-form-wrapper>
+

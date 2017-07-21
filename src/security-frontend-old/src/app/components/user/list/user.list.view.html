@@ -1,0 +1,58 @@
+<div class="page-header">
+    <h4>Users</h4>
+</div>
+<crm-search scope="vm"></crm-search>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th><input type="checkbox" ng-model="vm.bundle.isSelectedAll"
+                           ng-click="vm.bundle.selectAll(vm.bundle.isSelectedAll)"></th>
+                <th class="crm-hover" ng-click="vm.bundle.sortBy(vm.bundle.sortProperties.userName)">
+                        <span class="glyphicon" ng-show="vm.bundle.sortProperties.userName.enabled"
+                              ng-class="vm.bundle.sortProperties.userName.asc ? 'glyphicon-sort-by-attributes' : 'glyphicon-sort-by-attributes-alt' ">
+
+                        </span>
+                    Username
+                </th>
+                <th class="crm-hover" ng-click="vm.bundle.sortBy(vm.bundle.sortProperties.firstName)">
+                        <span class="glyphicon" ng-show="vm.bundle.sortProperties.firstName.enabled"
+                              ng-class="vm.bundle.sortProperties.firstName.asc ? 'glyphicon-sort-by-attributes' : 'glyphicon-sort-by-attributes-alt' ">
+
+                        </span>
+                    Full Name
+                </th>
+                <th class="crm-hover hidden-xs" ng-click="vm.bundle.sortBy(vm.bundle.sortProperties.email)">
+                        <span class="glyphicon" ng-show="vm.bundle.sortProperties.email.enabled"
+                              ng-class="vm.bundle.sortProperties.email.asc ? 'glyphicon-sort-by-attributes' : 'glyphicon-sort-by-attributes-alt' ">
+
+                        </span>
+                    Email
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-class="{'crm-hover' : user.active, 'crm-user-inactive' : !user.active}"
+                ng-repeat="user in vm.bundle.itemsList" ng-click="vm.edit(user)">
+                <td><input type="checkbox" ng-model="user.checked" ng-disabled="user | isCurrentUser"
+                           ng-click="vm.bundle.selectOne(); $event.stopPropagation()">
+                </td>
+                <td>{{user.userName}}</td>
+                <td data-title="name">{{user.firstName + ' ' + user.lastName}}</td>
+                <td class="hidden-xs">{{user.email}}</td>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<span class="pull-right" ng-hide="vm.bundle.paging.totalCount === 0">Total: {{vm.bundle.paging.totalCount}}</span>
+<div class="crm-text-center">
+    <uib-pagination class="pagination-sm block--center" ng-change="vm.bundle.paging.onPageChanged()"
+                    ng-model="vm.bundle.paging.currentPage"
+                    total-items="vm.bundle.paging.totalCount" items-per-page="vm.bundle.paging.itemsPerPage"
+                    max-size="vm.bundle.paging.visiblePages"
+                    boundary-link-numbers="true" rotate="false">
+    </uib-pagination>
+</div>

@@ -1,0 +1,140 @@
+<card [show]="showCard">
+    <div class="card-content">
+        <div class="card-header" *ngIf="!isAnyChecked()">
+            <span class="card-title">Workplaces</span>
+
+            <div class="action">
+                <a class="waves-effect btn-flat" (click)="add()">
+                    <i class="material-icons">add</i>
+                </a>
+                <a class="waves-effect btn-flat" *ngIf="isData() || removed.length" (click)="toggleEditMode()">
+                    <i class="material-icons" [ngClass]="{success: editMode}">mode_edit</i>
+                </a>
+                <a class="waves-effect btn-flat" *ngIf="!(isData() || removed.length)" (click)="removeCard.emit(7)">
+                    <i class="material-icons">clear</i>
+                </a>
+            </div>
+        </div>
+        <div class="card-header contextual-header" *ngIf="isAnyChecked()">
+            <span class="card-title">{{countSelectedItems}} item(s) selected</span>
+
+            <div class="action">
+                <a class="waves-effect btn-flat" (click)="remove()">
+                    <i class="material-icons">delete</i>
+                </a>
+            </div>
+        </div>
+
+        <div class="card-table">
+            <form #contactWorkplaceForm="ngForm">
+                <table class="highlight" *ngIf="isData()">
+                    <thead>
+                    <tr>
+                        <th style="width: 40px" *ngIf="editMode"></th>
+                        <th style="width: 30%">
+                            Work Experience
+                        </th>
+                        <th style="width: 70%;">
+                            Comment
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr [ngClass]="{'selected': workplace.selected}"
+                        *ngFor="let workplace of contact.workplaces; let i = index">
+                        <td style="width: 40px;" *ngIf="editMode">
+                            <p>
+                                <input type="checkbox"
+                                       class="filled-in sm"
+                                       [id]="'contact-workplace-select-' + i"
+                                       [name]="'contactWorkplaceSelect' + i"
+                                       [checked]="workplace.selected"
+                                       [(ngModel)]="workplace.selected">
+                                <label [attr.for]="'contact-workplace-select-' + i"></label>
+                            </p>
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input class="validate"
+                                           [id]="'contact-workplace-name-' + i"
+                                           [name]="'contactWorkplaceName' + i"
+                                           type="text"
+                                           [(ngModel)]="workplace.name"
+                                           placeholder="Name"
+                                           required>
+                                    <label [attr.for]="'contact-workplace-name-' + i"
+                                           data-error="This field is required."></label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input class="validate"
+                                           [id]="'contact-workplace-position-' + i"
+                                           [name]="'contactWorkplacePosition' + i"
+                                           type="text"
+                                           [(ngModel)]="workplace.position"
+                                           placeholder="Position"
+                                           required>
+                                    <label [attr.for]="'contact-workplace-position-' + i"
+                                           data-error="This field is required."></label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input materialize="pickadate"
+                                           [materializeParams]="[{selectMonths: true, selectYears: 100}]"
+                                           class="datepicker"
+                                           [id]="'contact-workplace-start-date-' + i"
+                                           [name]="'contactWorkplaceStartDate' + i"
+                                           type="text"
+                                           [ngModel]="workplace.startDate | date: 'd MMMM, y'"
+                                           (ngModelChange)="changeStartDate(workplace, $event)"
+                                           required>
+                                    <label [attr.for]="'contact-workplace-start-date-' + i">
+                                        from
+                                    </label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input materialize="pickadate"
+                                           [materializeParams]="[{selectMonths: true, selectYears: 100}]"
+                                           class="datepicker"
+                                           [id]="'contact-workplace-end-date-' + i"
+                                           [name]="'contactWorkplaceEndDate' + i"
+                                           type="text"
+                                           [ngModel]="workplace.endDate | date: 'd MMMM, y'"
+                                           (ngModelChange)="changeEndDate(workplace, $event)"
+                                           required>
+                                    <label [attr.for]="'contact-workplace-end-date-' + i">
+                                        to
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="comment">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea class="materialize-textarea"
+                                              [id]="'contact-workplace-comment-' + i"
+                                              [name]="'contactWorkplaceComment' + i"
+                                              [(ngModel)]="workplace.comment"
+                                              placeholder="Comment"></textarea>
+                                        <label [attr.for]="'contact-workplace-comment-' + i"
+                                               data-error="This field is required."></label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <div class="card-action" [@toggle]="any"
+         *ngIf="contact.id && contactWorkplaceForm.valid && (isAnyDirty(contactWorkplaceForm) || removed.length)">
+        <a (click)="save()">Save</a>
+    </div>
+</card>

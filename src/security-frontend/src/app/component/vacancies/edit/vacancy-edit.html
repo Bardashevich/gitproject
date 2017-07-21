@@ -1,0 +1,11 @@
+<div class="vacancy-edit-grid">
+    <div class="container">
+        <div class="general-information" *ngIf="vacancy">
+            <vacancy-general-info [vacancy]="vacancy" #general></vacancy-general-info>
+        </div>
+        <div class="buttons">
+            <button class="cancel" (click)="cancel()">CANCEL</button>
+            <button class="save" (click)="save()">SAVE</button>
+        </div>
+    </div>
+</div>

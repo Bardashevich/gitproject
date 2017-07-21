@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-11-14T16:17:25 -->
+<jasperReport xmlns = "http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation = "http://jasperreports.sourceforge.net/jasperreports
+                                    http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name = "jasper_report_template" pageWidth = "1095"
+              pageHeight = "842" columnWidth = "1015"
+              leftMargin = "40" rightMargin = "40" topMargin = "50" bottomMargin = "50">
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+    <property name="com.jaspersoft.studio.unit." value="pixel"/>
+    <parameter name="dateFormat" class="java.text.DateFormat"/>
+    <parameter name="startDate" class="java.util.Date"/>
+    <parameter name="endDate" class="java.util.Date"/>
+    <queryString>
+        <![CDATA[]]>
+    </queryString>
+    <field name="vacancy" class="com.itechart.security.business.model.dto.VacancyDto"/>
+    <field name="statistic" class="java.util.Map"/>
+
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+
+    <title>
+        <band splitType="Stretch"/>
+    </title>
+
+    <columnHeader>
+        <band height="51" splitType="Stretch">
+            <staticText>
+                <reportElement x="10" y="10" width="100" height="40" positionType="Float"
+                               uuid="55689874-2b50-427d-b772-f7e3bbfdead4"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Position:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="110" y="10" width="80" height="40" positionType="Float"
+                               uuid="61bc3fb3-1e7a-40df-af62-530ae5eb2a4d"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Date opened:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="190" y="10" width="90" height="40" positionType="Float"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Created By]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="280" y="10" width="90" height="40" positionType="Float"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Assigned To]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="370" y="10" width="60" height="40" positionType="Float"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Status]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="430" y="10" width="60" height="40" positionType="Float"/>
+                <textElement textAlignment="Center">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Consider]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="490" y="10" width="60" height="40" positionType="Float"/>
+                <textElement textAlignment="Center">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Plan to contact]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="550" y="10" width="60" height="40" positionType="Float"/>
+                <textElement textAlignment="Center">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Rejecte]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="610" y="10" width="60" height="40" positionType="Float"/>
+                <textElement textAlignment="Center">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Ignored]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="670" y="10" width="60" height="40" positionType="Float"/>
+                <textElement textAlignment="Center">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Rejected by candidate]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="730" y="10" width="70" height="40" positionType="Float"/>
+                <textElement textAlignment="Center">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Preliminary interview]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="800" y="10" width="60" height="40" positionType="Float"/>
+                <textElement textAlignment="Center">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Send manager to review]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="860" y="10" width="60" height="40" positionType="Float"/>
+                <textElement textAlignment="Center">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Schedule interview]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="920" y="10" width="60" height="40" positionType="Float"/>
+                <textElement textAlignment="Center">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Interview scheduled]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="980" y="10" width="60" height="40" positionType="Float"/>
+                <textElement textAlignment="Center">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Make offer]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="1040" y="10" width="60" height="40" positionType="Float"/>
+                <textElement textAlignment="Center">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Offer accepted]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="35" splitType="Stretch">
+            <textField isBlankWhenNull="true" isStretchWithOverflow ="true">
+                <reportElement x="10" y="10" width="100" height="23" positionType="Float"
+                               uuid="e8e604a9-0912-495e-936c-32ae1b8871f0"/>
+                <textElement>
+                    <font isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{vacancy}.getPositionName()]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true" isStretchWithOverflow ="true">
+                <reportElement x="110" y="10" width="80" height="23" positionType="Float"
+                               uuid="e08e47b4-e243-43d7-ad21-5cc8e311d9e1"/>
+                <textElement>
+                    <font isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{dateFormat}.format($F{vacancy}.getOpenDate())]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true" isStretchWithOverflow ="true">
+                <reportElement x="190" y="10" width="90" height="23"></reportElement>
+                <textElement>
+                    <font fontName="DejaVu Sans" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{vacancy}.getCreator().getFirstName() + " "
+                                    + $F{vacancy}.getCreator().getLastName()]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true" isStretchWithOverflow ="true">
+                <reportElement x="280" y="10" width="90" height="23"/>
+                <textElement>
+                    <font fontName="DejaVu Sans" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{vacancy}.getHr().getFirstName() + " "
+                                    + $F{vacancy}.getHr().getLastName()]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true" isStretchWithOverflow ="true">
+                <reportElement x="370" y="10" width="60" height="23"/>
+                <textElement>
+                    <font fontName="DejaVu Sans" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{vacancy}.getStatus()]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true" isStretchWithOverflow ="true">
+                <reportElement x="430" y="10" width="60" height="23" positionType="Float">
+                    <printWhenExpression><![CDATA[$F{statistic}.size() > 0]]></printWhenExpression>
+                </reportElement>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression class="java.lang.Number"><![CDATA[$F{statistic}.get("CONSIDER")]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true" isStretchWithOverflow ="true">
+                <reportElement x="490" y="10" width="60" height="23" positionType="Float">
+                    <printWhenExpression><![CDATA[$F{statistic}.size() > 0]]></printWhenExpression>
+                </reportElement>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression class="java.lang.Number"><![CDATA[$F{statistic}.get("CONTACT")]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true" isStretchWithOverflow ="true">
+                <reportElement x="550" y="10" width="60" height="23" positionType="Float">
+                    <printWhenExpression><![CDATA[$F{statistic}.size() > 0]]></printWhenExpression>
+                </reportElement>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression class="java.lang.Number"><![CDATA[$F{statistic}.get("REJECT")]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true" isStretchWithOverflow ="true">
+                <reportElement x="610" y="10" width="60" height="23" positionType="Float">
+                    <printWhenExpression><![CDATA[$F{statistic}.size() > 0]]></printWhenExpression>
+                </reportElement>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression class="java.lang.Number"><![CDATA[$F{statistic}.get("IGNORED")]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true" isStretchWithOverflow ="true">
+                <reportElement x="670" y="10" width="60" height="23" positionType="Float">
+                    <printWhenExpression><![CDATA[$F{statistic}.size() > 0]]></printWhenExpression>
+                </reportElement>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression class="java.lang.Number"><![CDATA[$F{statistic}.get("CANDIDATE_REJECT")]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true" isStretchWithOverflow ="true">
+                <reportElement x="730" y="10" width="70" height="23" positionType="Float">
+                    <printWhenExpression><![CDATA[$F{statistic}.size() > 0]]></printWhenExpression>
+                </reportElement>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression class="java.lang.Number"><![CDATA[$F{statistic}.get("PRELIMINARY_ITERVIEW")]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true" isStretchWithOverflow ="true">
+                <reportElement x="800" y="10" width="60" height="23" positionType="Float">
+                    <printWhenExpression><![CDATA[$F{statistic}.size() > 0]]></printWhenExpression>
+                </reportElement>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression class="java.lang.Number"><![CDATA[$F{statistic}.get("MANAGER_REVIEW")]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true" isStretchWithOverflow ="true">
+                <reportElement x="860" y="10" width="60" height="23" positionType="Float">
+                    <printWhenExpression><![CDATA[$F{statistic}.size() > 0]]></printWhenExpression>
+                </reportElement>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression class="java.lang.Number"><![CDATA[$F{statistic}.get("SCHEDULE_ITERVIEW")]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true" isStretchWithOverflow ="true">
+                <reportElement x="920" y="10" width="60" height="23" positionType="Float">
+                    <printWhenExpression><![CDATA[$F{statistic}.size() > 0]]></printWhenExpression>
+                </reportElement>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression class="java.lang.Number"><![CDATA[$F{statistic}.get("ITERVIEW_SCHEDULED")]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true" isStretchWithOverflow ="true">
+                <reportElement x="980" y="10" width="60" height="23" positionType="Float">
+                    <printWhenExpression><![CDATA[$F{statistic}.size() > 0]]></printWhenExpression>
+                </reportElement>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression class="java.lang.Number"><![CDATA[$F{statistic}.get("MAKE_OFFER")]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true" isStretchWithOverflow ="true">
+                <reportElement x="1040" y="10" width="60" height="23" positionType="Float">
+                    <printWhenExpression><![CDATA[$F{statistic}.size() > 0]]></printWhenExpression>
+                </reportElement>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression class="java.lang.Number"><![CDATA[$F{statistic}.get("ACCEPT")]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <columnFooter>
+        <band splitType="Stretch"/>
+    </columnFooter>
+    <pageFooter>
+        <band splitType="Stretch"/>
+    </pageFooter>
+    <summary>
+        <band splitType="Stretch"/>
+    </summary>
+</jasperReport>

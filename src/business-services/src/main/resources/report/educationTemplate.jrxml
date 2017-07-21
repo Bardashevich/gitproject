@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-11-11T16:36:39 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="emailTestReport" pageWidth="585" pageHeight="842" columnWidth="585" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="61d3bbc2-6510-409a-9395-a650ca453969">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="dateFormat" class="java.text.DateFormat"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="name" class="java.lang.String"/>
+	<field name="faculty" class="java.lang.String"/>
+	<field name="speciality" class="java.lang.String"/>
+	<field name="startDate" class="java.util.Date"/>
+	<field name="endDate" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="60" height="20" uuid="430096c1-07c4-49c4-9e96-5994362ebf38"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Education:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="10" y="30" width="250" height="1" uuid="d88ef2c1-8c6a-40a8-868d-e330ca152217"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="60" height="20" uuid="55689874-2b50-427d-b772-f7e3bbfdead4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[University:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="10" width="80" height="20" uuid="61bc3fb3-1e7a-40df-af62-530ae5eb2a4d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Speciality:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="8" width="60" height="20" uuid="67c78cf5-d0d9-480e-ab90-086066b9e144"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Start date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="8" width="100" height="20" uuid="c3780c90-d945-4f49-a6e1-e6dd23fc4927"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Graduation year:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="10" width="80" height="20" uuid="ccf8bcc3-0c9c-42bf-aaee-2c57fd202b7c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Faculty:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="45" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="10" y="10" width="130" height="23" positionType="Float"
+							   uuid="e8e604a9-0912-495e-936c-32ae1b8871f0"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="270" y="10" width="93" height="23" positionType="Float"
+							   uuid="e08e47b4-e243-43d7-ad21-5cc8e311d9e1"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{speciality}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="378" y="10" width="60" height="23" positionType="Float"
+							   uuid="c2b76938-99e6-4b8f-83a5-ce317d7d8c75"/>
+				<textFieldExpression><![CDATA[$P{dateFormat}.format($F{startDate})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="450" y="10" width="60" height="23" positionType="Float"
+							   uuid="9892182f-18ff-426a-85b9-c1e78f8ff45d"/>
+				<textFieldExpression><![CDATA[$F{endDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="150" y="10" width="92" height="23" uuid="c7835572-b36b-410f-8db2-9cc26d1cd009"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{faculty}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
+
+

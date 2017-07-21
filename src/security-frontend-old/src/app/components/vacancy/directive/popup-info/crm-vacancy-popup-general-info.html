@@ -1,0 +1,303 @@
+<crm-form-wrapper form-title="vacancyCtrl.title" submit-text="{{vacancyCtrl.submitText}}" cancel-text="{{vacancyCtrl.cancelText}}"
+                  submit-btn="vacancyCtrl.submitPopupEditForm(vm)"
+                  cancel-btn="vacancyCtrl.cancelPopupEditForm(vm)"
+                  modal="true"
+                  ng-form="vacancyForm"
+                  crm-form-validation="vacancyForm">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" crm-input-validation>
+                            <label for="vacancy-position">Position</label>
+                            <input ng-disabled="!vacancyCtrl.canEdit"
+                                   id="vacancy-position"
+                                   class="form-control"
+                                   name="positionName"
+                                   placeholder="Position"
+                                   ng-model="vacancyCtrl.vacancy.positionName"
+                                   required
+                                   maxlength="100">
+                            <span ng-show="vacancyForm.name.$dirty && vacancyForm.name.$error.required"
+                                  class="help-block">Position required</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" crm-input-validation>
+                            <label for="vacancy-name">Vacancy name</label>
+                            <input ng-disabled="!vacancyCtrl.canEdit"
+                                   id="vacancy-name"
+                                   class="form-control"
+                                   name="name"
+                                   placeholder="Vacancy name"
+                                   ng-model="vacancyCtrl.vacancy.name"
+                                   required
+                                   maxlength="100">
+                            <span ng-show="vacancyForm.name.$dirty && vacancyForm.name.$error.required"
+                                  class="help-block">Vacancy name required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group" crm-input-validation>
+                            <label for="vacancy-responsibilities">Responsibilities</label>
+                            <textarea ng-disabled="!vacancyCtrl.canEdit"
+                                      id="vacancy-responsibilities"
+                                      class="form-control resize-none"
+                                      name="responsibilities"
+                                      placeholder="list of responsibilities"
+                                      ng-model="vacancyCtrl.vacancy.responsibilities"
+                                      required
+                                      maxlength="500"></textarea>
+                            <span ng-show="vacancyForm.name.$dirty && vacancyForm.name.$error.required"
+                                  class="help-block">Responsibilities required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <crm-vacancy-skills vm="vacancyCtrl"></crm-vacancy-skills>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group crm-select-validation-icon" crm-input-validation>
+                            <label for="educationType">Education type</label>
+                            <select ng-model="vacancyCtrl.vacancy.educationType"
+                                    id="educationType"
+                                    name="educationType"
+                                    ng-options="option as option for option in vacancyCtrl.educationTypes"
+                                    class="form-control">
+                                <option value="">- Please select -</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" crm-input-validation>
+                            <label for="vacancy-salary-min">Salary (min)</label>
+                            <input ng-disabled="!vacancyCtrl.canEdit"
+                                   id="vacancy-salary-min"
+                                   class="form-control"
+                                   name="salaryMin"
+                                   placeholder="Salary minimum"
+                                   ng-model="vacancyCtrl.vacancy.salaryMin"
+                                   maxlength="11">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" crm-input-validation>
+                            <label for="vacancy-salary-max">Salary (max)</label>
+                            <input ng-disabled="!vacancyCtrl.canEdit"
+                                   id="vacancy-salary-max"
+                                   class="form-control"
+                                   name="salaryMax"
+                                   placeholder="Salary maximum"
+                                   ng-model="vacancyCtrl.vacancy.salaryMax"
+                                   maxlength="11">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" crm-input-validation>
+                            <label for="vacancy-open-date">Open date</label>
+                            <p class="input-group">
+                                <input
+                                    id="vacancy-open-date"
+                                    pattern="(19|([2-9][0-9]))\d\d(-)\d\d(-)\d\d"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="yyyy-mm-dd"
+                                    uib-datepicker-popup="yyyy-MM-dd"
+                                    ng-model="vacancyCtrl.vacancy.openDate"
+                                    is-open="vacancyCtrl.isDatePickerVisible.openDate"
+                                    datepicker-options="vacancyCtrl.datePickerOptions.openDate"
+                                    ng-change="vm.endDate(vm.vacancy.openDate)"
+                                    ng-required="true"
+                                    close-text="Close"
+                                    alt-input-formats="altInputFormats"
+                                    required
+                                    name="vacancyOpenDate"
+                                    />
+                                <span class="input-group-btn">
+                            <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="vacancyCtrl.showDatePicker(vacancyCtrl, 'openDate')">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                            </p>
+                            <span
+                                ng-show="vacancyForm.vacancyOpenDate.$dirty && vacancyForm.vacancyOpenDate.$error.required"
+                                class="help-block has-error">Open date required</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" crm-input-validation>
+                            <label for="vacancy-close-date">Close date</label>
+                            <p class="input-group">
+                                <input
+                                    type="text"
+                                    id="vacancy-close-date"
+                                    class="form-control"
+                                    placeholder="yyyy-mm-dd"
+                                    uib-datepicker-popup="yyyy-MM-dd"
+                                    ng-model="vacancyCtrl.vacancy.closeDate"
+                                    is-open="vacancyCtrl.isDatePickerVisible.closeDate"
+                                    datepicker-options="vacancyCtrl.datePickerOptions.closeDate"
+                                    close-text="Close"/>
+                                <span class="input-group-btn">
+                        <button type="button"
+                                class="btn btn-default"
+                                ng-click="vacancyCtrl.showDatePicker(vacancyCtrl, 'closeDate')">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" crm-input-validation>
+                            <label for="vacancy-experience-min">Work experience (min)</label>
+                            <input ng-disabled="!vacancyCtrl.canEdit"
+                                   id="vacancy-experience-min"
+                                   class="form-control"
+                                   name="experienceMin"
+                                   placeholder="Minimum work experience"
+                                   ng-model="vacancyCtrl.vacancy.experienceMin"
+                                   maxlength="2">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" crm-input-validation>
+                            <label for="vacancy-experience-max">Work experience (max)</label>
+                            <input ng-disabled="!vacancyCtrl.canEdit"
+                                   id="vacancy-experience-max"
+                                   class="form-control"
+                                   name="experienceMax"
+                                   placeholder="Maximum work experience"
+                                   ng-model="vacancyCtrl.vacancy.experienceMax"
+                                   maxlength="2">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" crm-input-validation>
+                            <label for="vacancy-foreign-language">Foreign language</label>
+                            <input ng-disabled="!vacancyCtrl.canEdit"
+                                   id="vacancy-foreign-language"
+                                   class="form-control"
+                                   name="foreignLanguage"
+                                   placeholder="Foreign language"
+                                   ng-model="vacancyCtrl.vacancy.foreignLanguage"
+                                   maxlength="20">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="vacancy-language-level">Language level</label>
+                            <select ng-disabled="!vacancyCtrl.canEdit"
+                                    id="vacancy-language-level"
+                                    class="form-control"
+                                    name="languageLevel"
+                                    ng-model="vacancyCtrl.vacancy.languageLevel"
+                                    ng-options="level for level in
+                            ['-Please, select-',
+                            'Beginner',
+                            'Elementary',
+                            'Lower intermediate',
+                            'Intermediate',
+                            'Upper intermediate',
+                            'Advanced',
+                            'Proficiency']">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Assigned HR</label>
+                            <input class="hidden" name="vacancyHR"
+                                   ng-model="vacancyCtrl.vacancy.hr"
+                                   required
+                                   crm-ui-select-validation>
+                            <ui-select id="assigned-hr"
+                                       ng-model="vacancyCtrl.vacancy.hr"
+                                       title="assigned hr ...">
+                                <ui-select-match placeholder="Assign an HR...">{{$select.selected | fullName}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                    repeat="person in vacancyCtrl.hrList | filter: $select.search | orderBy : ['firstName', 'lastName'] track by person.id">
+                                    <span ng-bind-html="person | fullName | highlight: $select.search"></span>
+                                    <small ng-bind-html="person.code | highlight: $select.search"></small>
+                                </ui-select-choices>
+                            </ui-select>
+                            <span
+                                ng-show="vacancyForm.vacancyCreator.$dirty && vacancyForm.vacancyCreator.$error.required"
+                                class="help-block">Assigned HR field required</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Created by</label>
+                            <input class="hidden" name="vacancyCreator"
+                                   ng-model="vacancyCtrl.vacancy.creator"
+                                   required
+                                   crm-ui-select-validation>
+                            <ui-select
+                                id="creator"
+                                ng-model="vacancyCtrl.vacancy.creator"
+                                title="creator of the vacancy ...">
+                                <ui-select-match placeholder="Select the creator of the vacancy...">{{$select.selected | fullName}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                    repeat="person in vacancyCtrl.managersList | filter: $select.search | orderBy : ['firstName', 'lastName'] track by person.id">
+                                    <span ng-bind-html="person | fullName | highlight: $select.search"></span>
+                                    <small ng-bind-html="person.code | highlight: $select.search"></small>
+                                </ui-select-choices>
+                            </ui-select>
+                            <span
+                                ng-show="vacancyForm.vacancyCreator.$dirty && vacancyForm.vacancyCreator.$error.required"
+                                class="help-block">Creator field required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group crm-select-validation-icon" crm-input-validation>
+                            <label for="vacancy-priority">Vacancy priority</label>
+                            <select ng-model="vacancyCtrl.vacancy.vacancyPriority"
+                                    id="vacancy-priority"
+                                    class="form-control"
+                                    name="priority"
+                                    ng-options="option.name as option.value for option in vacancyCtrl.priorities">
+                                <option value="">Please, select</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group" crm-input-validation>
+                            <label for="vacancy-comment">Comment</label>
+                            <textarea ng-disabled="!vacancyCtrl.canEdit"
+                                      id="vacancy-comment"
+                                      class="form-control resize-none"
+                                      name="comment"
+                                      placeholder="Comment"
+                                      ng-model="vacancyCtrl.vacancy.comment"
+                                      maxlength="500"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</crm-form-wrapper>

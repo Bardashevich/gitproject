@@ -1,0 +1,78 @@
+<div #accessUsers class="access-users">
+    <div #defaultAccess class="default-access">
+        <div class="row">
+            <div class="col s12">
+                <div class="card z-depth-1" [@enterAnimation]="showDefaultAccess">
+                    <div class="card-content padding-bottom-0">
+                        <div class="card-header">
+                            <span class="card-title">Permissions</span>
+
+                            <div class="action">
+                                <a class="modal-trigger waves-effect btn-flat" (click)="mark()" *ngIf="acls && acls.length > 0">
+                                    <i class="material-icons">done</i>
+                                </a>
+                                <a class="modal-trigger waves-effect btn-flat" (click)="addUsersPermissions()">
+                                    <i class="material-icons">person_add</i>
+                                </a>
+                                <a class="modal-trigger waves-effect btn-flat" (click)="addGroupsPermissions()">
+                                    <i class="material-icons">group_add</i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-header" *ngIf="countSelectedItems(acls) > 0">
+                            <span class="card-title">{{countSelectedItems(acls)}} item(s) selected</span>
+                            <div class="action">
+                                <a class="modal-trigger waves-effect btn-flat" (click)="remove()">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="highlight" *ngIf="acls && acls.length > 0">
+                        <thead>
+                        <tr>
+                            <th style="width: 3%" (click)="togglePermissionsAll()" *ngIf="isMark()">
+                                <p>
+                                    <input type="checkbox" class="filled-in" [checked]="isAllPermissionsChecked()">
+                                    <label></label>
+                                </p>
+                            </th>
+                            <th style="width: 47%">Name</th>
+                            <th style="width: 10%" *ngFor="let prop of canProps" (click)="togglePermissions(prop.field)">
+                                {{prop.name}}
+                                <i class="material-icons" *ngIf="isAllPermissionsSelected(prop.field)">done_all</i>
+                                <i class="material-icons" *ngIf="!isAllPermissionsSelected(prop.field)">select_all</i>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let p of acls; let i = index;" [ngClass]="{selected: p.selected}">
+                            <td (click)="toggleSelection(p)" *ngIf="isMark()">
+                                <p>
+                                    <input type="checkbox" class="filled-in" [(ngModel)]="p.selected">
+                                    <label></label>
+                                </p>
+                            </td>
+                            <td (click)="toggleSelection(p)">
+                                <i class="material-icons" *ngIf="p.principalTypeName == 'user'">person</i>
+                                <i class="material-icons" *ngIf="p.principalTypeName == 'group'">group</i>
+                                <span>{{p.name}}</span>
+                            </td>
+                            <td *ngFor="let prop of canProps" (click)="togglePermission(i,prop.field)">
+                                <p>
+                                    <input type="checkbox" class="filled-in" [(ngModel)]="p[prop.field]">
+                                    <label></label>
+                                </p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="card-action" *ngIf="true">
+                        <a (click)="save()">Save</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

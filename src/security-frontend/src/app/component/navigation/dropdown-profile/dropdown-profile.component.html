@@ -1,0 +1,19 @@
+<div [@dropdown]="dropdown-profile"
+     *ngIf="showDropdownProfile"
+     class="dropdown-profile-container">
+    <div class="dropdown-caret">
+        <span class="caret-outer"></span>
+        <span class="caret-inner"></span>
+    </div>
+    <div class="dropdown-profile">
+        <ul class="collection">
+            <li class="collection-item">
+                <span class="user-name" *ngIf="user">{{user.username}}</span>
+                <span class="additional">View profile</span>
+            </li>
+            <li class="collection-item" (click)="logout()">
+                <span class="common">Log out</span>
+            </li>
+        </ul>
+    </div>
+</div>

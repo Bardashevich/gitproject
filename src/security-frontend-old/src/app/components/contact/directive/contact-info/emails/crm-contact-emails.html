@@ -1,0 +1,38 @@
+<div class="panel panel-default" ng-if="vm.canEdit || (!vm.canEdit && vm.contact.emails.length>0)">
+    <div class="panel-heading">
+        <crm-contact-table-header title="Emails"
+                                  adding-function="vm.details.email.add"
+                                  removing-function="vm.details.email.remove"
+                                  vm="vm"></crm-contact-table-header>
+    </div>
+    <table class="table table-condensed crm-table-fixed" ng-show="vm.contact.emails.length>0">
+        <thead>
+        <tr>
+            <th class="crm-narrow"><input type="checkbox"
+                       ng-show="vm.canEdit"
+                       title="select Emails"
+                       ng-click="vm.details.checkAll(vm.contact.emails, vm.contact.emails.isSelectedAll)"
+                       ng-model="vm.contact.emails.isSelectedAll"></th>
+            <th class="col-xs-8">Email</th>
+            <th class="col-xs-4">Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="email in vm.contact.emails"
+            ng-click="vm.canEdit ? vm.details.email.edit(email, vm) : null"
+            ng-hide="email.dateDeleted"
+            class="crm-hover">
+            <td>
+                <input ng-model="email.checked"
+                       type="checkbox"
+                       ng-show="vm.canEdit"
+                       title="select Email"
+                       ng-click="vm.details.isAllSelected(vm.contact.emails); $event.stopPropagation()"
+                       ng-init="vm.details.isAllSelected(vm.contact.emails)">
+            </td>
+            <td>{{email.name}}</td>
+            <td>{{vm.details.email.getTypeName(email.type,vm.dictionary.emailTypes)}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

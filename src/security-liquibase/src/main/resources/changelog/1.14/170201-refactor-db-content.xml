@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="01" author="artsiom.marenau">
+        <sql dbms="mysql">
+            DELETE FROM user_group WHERE group_id = 10;
+            DELETE FROM `group` WHERE id = 10;
+        </sql>
+    </changeSet>
+
+    <changeSet id="02" author="artsiom.marenau">
+        <sql dbms="mysql">
+            INSERT IGNORE INTO principal(id) VALUES(17);
+            INSERT IGNORE INTO `group`(id,name,description) VALUES(17,'DEPARTMENT_MANAGERs','DEPARTMENT MANAGER group');
+            INSERT IGNORE INTO user_group(user_id,group_id) VALUES(10,17);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--PRINCIPALS-->
+    <changeSet id="01" author="siarhei.rudzevich">
+        <sql dbms="mysql">
+            UPDATE def_dash_item SET def_dash_item.col=0,def_dash_item.row=3 WHERE def_dash_item.id=17;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

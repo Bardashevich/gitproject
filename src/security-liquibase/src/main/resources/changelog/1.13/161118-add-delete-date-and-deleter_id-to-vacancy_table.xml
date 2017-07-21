@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="01" author="artsiom.marenau">
+        <addColumn tableName="vacancy">
+            <column name="date_deleted" type="DATE"/>
+            <column name="deleter_id" type="BIGINT UNSIGNED"/>
+        </addColumn>
+        <!--auto rollback-->
+    </changeSet>
+
+    <changeSet id="02" author="artsiom.marenau">
+        <addForeignKeyConstraint baseColumnNames="deleter_id" baseTableName="vacancy"
+                                 referencedColumnNames="id" referencedTableName="contact"
+                                 constraintName="fk_deleter_id_contact_id"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+        <!--auto rollback-->
+    </changeSet>
+</databaseChangeLog>

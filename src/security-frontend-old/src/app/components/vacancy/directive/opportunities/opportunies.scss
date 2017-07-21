@@ -1,0 +1,123 @@
+.opportunity-image-rounded{
+    border-radius: 30px;
+    width: 60px;
+    height: auto;
+}
+.linkedin-result-item.hover, .linkedin-result-item:hover{
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #e0e0e0;
+}
+.rounded-candidat-image{
+    border-radius: 15px;
+    width: 150px;
+    height: auto;
+}
+.candidat-image{
+    float:left;
+}
+.candidat-main-info{
+    float:left;
+    padding-left: 20px;
+    width: 73%;
+    font-family: Arial,sans-serif;
+}
+.candidat-name{
+    font-size:30px;
+    color:#00BAF2;
+}
+.candidat-details{
+    display: inline-block;
+    margin:15px;
+    width: 95%;
+}
+
+.opportunity-result-item-data{
+    width: 50%;
+    float:left;
+
+    b{
+        display:inline-block;
+    }
+}
+.opportunity-actions-container{
+    float:left;
+    .opportunity-actions, .linkedin-actions{
+        display: inline-block;
+        float:left;
+    }
+    .linkedin-actions{
+        padding-left: 15px;
+    }
+}
+
+.contact-was-added{
+    padding-right: 10px;
+    font-size: 16px;
+    color: limegreen;
+    font-weight: bold;
+    float: left;
+}
+.opportunity-working-status-container{
+    padding-top:8px;
+}
+#workingStatus{
+    font-size: 12px;
+    height: 28px;
+}
+.opportunity-status{
+    font-size: 16px;
+    font-weight: bold;
+}
+.opportunity-status-container{
+    width: 13%;
+    float: left;
+    margin-right: 8px;
+}
+.opportunity-status-attr{
+    margin-top: 5px;
+    font-size: 14px;
+}
+.opportunity_status_REJECT{
+    background-color: #413D37;
+    border-color: #413D37;
+}
+.opportunity_status_REJECT:hover{
+    background-color: #645F5C !important;
+    border-color: #645F5C !important;
+}
+.opportunity_status_CONTACT,.opportunity_status_MANAGER_REVIEW,.opportunity_status_PRELIMINARY_ITERVIEW
+, .opportunity_status_SCHEDULE_ITERVIEW, .opportunity_status_ITERVIEW_SCHEDULED, .opportunity_status_MAKE_OFFER
+,.opportunity_status_CONSIDER, .opportunity_status_ACCEPT
+{
+    background-color: #2BD800;
+    border-color: #2BD800;
+}
+.opportunity_status_CONTACT:hover, .opportunity_status_MANAGER_REVIEW:hover,.opportunity_status_PRELIMINARY_ITERVIEW:hover
+, .opportunity_status_SCHEDULE_ITERVIEW:hover, .opportunity_status_ITERVIEW_SCHEDULED:hover
+, .opportunity_status_MAKE_OFFER:hover, .opportunity_status_CONSIDER:hover, .opportunity_status_ACCEPT:hover
+{
+    background-color: #00AD00 !important;
+    border-color: #00AD00 !important;
+}
+
+.opportunity_status_CANDIDATE_REJECT{
+    background-color: #EC1F04;
+    border-color: #EC1F04;
+}
+.opportunity_status_CANDIDATE_REJECT:hover{
+    background-color: #CA0000 !important;
+    border-color: #CA0000 !important;
+}
+.opportunity_status_IGNORED{
+    background-color: #C1A7A9;
+    border-color: #C1A7A9;
+}
+.opportunity_status_IGNORED:hover{
+    background-color: #A88E90 !important;
+    border-color: #A88E90 !important;
+}
+.col-centered{
+    margin: 10px auto;
+    float:none;
+}
+
