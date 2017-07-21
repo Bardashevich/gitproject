@@ -1,0 +1,69 @@
+<card [show]="showCard">
+    <div class="card-content">
+        <div class="card-header" *ngIf="!isAnyChecked()">
+            <span class="card-title">Comments</span>
+
+            <div class="action">
+                <a class="waves-effect btn-flat" (click)="add()">
+                    <i class="material-icons">add</i>
+                </a>
+                <a class="waves-effect btn-flat" *ngIf="isData() || isAnyDeleted()" (click)="toggleEditMode()">
+                    <i class="material-icons" [ngClass]="{success: editMode}">mode_edit</i>
+                </a>
+                <a class="waves-effect btn-flat" *ngIf="!(isData() || isAnyDeleted())" (click)="removeCard.emit(11)">
+                    <i class="material-icons">clear</i>
+                </a>
+            </div>
+        </div>
+        <div class="card-header contextual-header" *ngIf="isAnyChecked()">
+            <span class="card-title">{{countSelectedItems}} item(s) selected</span>
+
+            <div class="action">
+                <a class="waves-effect btn-flat" (click)="remove()">
+                    <i class="material-icons">delete</i>
+                </a>
+            </div>
+        </div>
+
+        <div class="card-table">
+            <form #contactCommentForm="ngForm">
+                <table class="highlight" *ngIf="isData()">
+                    <tbody>
+                    <tr [ngClass]="{'selected': comment.selected}"
+                        *ngFor="let comment of notDeletedComments; let i = index">
+                        <td style="width: 40px;" *ngIf="editMode">
+                            <p>
+                                <input type="checkbox"
+                                       class="filled-in sm"
+                                       [id]="'contact-comment-select-' + i"
+                                       [name]="'contactCommentSelect' + i"
+                                       [checked]="comment.selected"
+                                       [(ngModel)]="comment.selected">
+                                <label [attr.for]="'contact-comment-select-' + i"></label>
+                            </p>
+                        </td>
+                        <td style="width: 10%;">{{comment.author}}</td>
+                        <td style="width: 10%">{{comment.date | date: 'd MMMM, y'}}</td>
+                        <td>
+                            <div class="input-field">
+                                <textarea
+                                        class="materialize-textarea"
+                                        [id]="'contact-comment-text-' + i"
+                                        [name]="'contactCommentText' + i"
+                                        [(ngModel)]="comment.text"
+                                        placeholder="Comment"
+                                        required></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <div class="card-action" [@toggle]="any"
+         *ngIf="contact.id && contactCommentForm.valid && (isAnyDirty(contactCommentForm) || isAnyDeleted())">
+        <a (click)="save()">Save</a>
+    </div>
+</card>

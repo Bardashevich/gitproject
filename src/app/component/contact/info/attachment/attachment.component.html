@@ -1,0 +1,62 @@
+<card [show]="showCard">
+    <div class="card-content">
+        <div class="card-header" *ngIf="!isAnyChecked()">
+            <span class="card-title">Attachments</span>
+
+            <div class="action">
+                <a class="waves-effect btn-flat" (click)="add()">
+                    <i class="material-icons">add</i>
+                </a>
+                <a class="waves-effect btn-flat" *ngIf="isData() || removed.length" (click)="toggleEditMode()">
+                    <i class="material-icons" [ngClass]="{success: editMode}">mode_edit</i>
+                </a>
+                <a class="waves-effect btn-flat" *ngIf="!(isData() || removed.length)" (click)="removeCard.emit(10)">
+                    <i class="material-icons">clear</i>
+                </a>
+            </div>
+        </div>
+        <div class="card-header contextual-header" *ngIf="isAnyChecked()">
+            <span class="card-title">{{countSelectedItems}} item(s) selected</span>
+
+            <div class="action">
+                <a class="waves-effect btn-flat" (click)="remove()">
+                    <i class="material-icons">delete</i>
+                </a>
+            </div>
+        </div>
+
+        <div class="card-table">
+            <form #contactAttachmentForm="ngForm">
+                <table class="highlight" *ngIf="isData()">
+                    <tbody>
+                    <tr [ngClass]="{'selected': attachment.selected}"
+                        *ngFor="let attachment of contact.attachments; let i = index">
+                        <td style="width: 40px;" *ngIf="editMode">
+                            <p>
+                                <input type="checkbox"
+                                       class="filled-in sm"
+                                       [id]="'contact-attachment-select-' + i"
+                                       [name]="'contactAttachmentSelect' + i"
+                                       [checked]="attachment.selected"
+                                       [(ngModel)]="attachment.selected">
+                                <label [attr.for]="'contact-attachment-select-' + i"></label>
+                            </p>
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <div class="card-action" [@toggle]="any"
+         *ngIf="contact.id && contactAttachmentForm.valid && (isAnyDirty(contactAttachmentForm) || removed.length)">
+        <a (click)="save()">Save</a>
+    </div>
+</card>

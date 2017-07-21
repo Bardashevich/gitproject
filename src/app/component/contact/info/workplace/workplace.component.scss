@@ -1,0 +1,19 @@
+.row {
+  margin-bottom: 0;
+}
+
+td.comment {
+  height: 100%;
+
+  .row {
+    height: 100%;
+
+    .input-field {
+      height: 100%;
+
+      textarea {
+        height: 85%;
+      }
+    }
+  }
+}

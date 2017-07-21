@@ -1,0 +1,80 @@
+<card [show]="showCard">
+    <div class="card-content">
+        <div class="card-header" *ngIf="!isAnyChecked()">
+            <span class="card-title">Social Networks</span>
+
+            <div class="action">
+                <a class="waves-effect btn-flat" (click)="add()">
+                    <i class="material-icons">add</i>
+                </a>
+                <a class="waves-effect btn-flat" *ngIf="isData() || removed.length" (click)="toggleEditMode()">
+                    <i class="material-icons" [ngClass]="{success: editMode}">mode_edit</i>
+                </a>
+                <a class="waves-effect btn-flat" *ngIf="!(isData() || removed.length)" (click)="removeCard.emit(2)">
+                    <i class="material-icons">clear</i>
+                </a>
+            </div>
+        </div>
+        <div class="card-header contextual-header" *ngIf="isAnyChecked()">
+            <span class="card-title">{{countSelectedItems}} item(s) selected</span>
+
+            <div class="action">
+                <a class="waves-effect btn-flat" (click)="remove()">
+                    <i class="material-icons">delete</i>
+                </a>
+            </div>
+        </div>
+
+        <div class="card-table">
+            <form #contactSocialNetworkForm="ngForm">
+                <table class="highlight" *ngIf="isData()">
+                    <tbody>
+                    <tr [ngClass]="{'selected': socialNetwork.selected}"
+                        *ngFor="let socialNetwork of contact.socialNetworks; let i = index">
+                        <td style="width: 40px;" *ngIf="editMode">
+                            <p>
+                                <input type="checkbox"
+                                       class="filled-in sm"
+                                       [id]="'contact-social-network-select-' + i"
+                                       [name]="'contactSocialNetworkSelect' + i"
+                                       [checked]="socialNetwork.selected"
+                                       [(ngModel)]="socialNetwork.selected">
+                                <label [attr.for]="'contact-social-network-select-' + i"></label>
+                            </p>
+                        </td>
+                        <td>
+                            <div class="input-field">
+                                <input class="validate"
+                                       [id]="'contact-social-network-url-' + i"
+                                       [name]="'contactSocialNetworkURL' + i"
+                                       type="text"
+                                       [(ngModel)]="socialNetwork.url"
+                                       placeholder="URL"
+                                       required>
+                                <label [attr.for]="'contact-social-network-url-' + i"
+                                       data-error="This field is required."></label>
+                            </div>
+                        </td>
+                        <td style="width: 35%;">
+                            <select materialize="material_select"
+                                    [name]="'contactSocialNetwork' + i"
+                                    [(ngModel)]="socialNetwork.socialNetwork"
+                                    [materializeSelectOptions]="socialNetworks"
+                                    required>
+                                <option value="" disabled selected>Social Network</option>
+                                <option *ngFor="let option of socialNetworks" [value]="option | optionPipe: 'id'">{{option | optionPipe: 'value'}}
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <div class="card-action" [@toggle]="any"
+         *ngIf="contact.id && contactSocialNetworkForm.valid && (isAnyDirty(contactSocialNetworkForm) || removed.length)">
+        <a (click)="save()">Save</a>
+    </div>
+</card>
