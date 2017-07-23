@@ -1,1 +1,0 @@
-User ${toUser} was activated !

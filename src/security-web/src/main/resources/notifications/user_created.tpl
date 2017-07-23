@@ -1,1 +1,0 @@
-User ${toUser} was created <#list roles><#if roles?has_content>with roles: <#items as role>${role}<#sep>, </#sep></#items><#else>without roles</#if></#list> !
