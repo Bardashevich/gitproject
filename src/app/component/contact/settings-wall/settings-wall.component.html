@@ -1,0 +1,244 @@
+<div class="container">
+    <div class="section-header">
+        <h5 class="title">General Info</h5>
+
+        <div class="action">
+            <span [hidden]="properties[1].showCard">
+                <a class="modal-trigger waves-effect btn-flat"
+                   (click)="toggleCard(1)"
+                   [ngClass]="{inconspicuous: properties[1].showCard}">
+                    <i class="material-icons">language</i>
+                </a>
+            </span>
+            <span [hidden]="properties[2].showCard">
+                <a class="modal-trigger waves-effect btn-flat"
+                   (click)="toggleCard(2)"
+                   [ngClass]="{inconspicuous: properties[2].showCard}">
+                    <i class="material-icons">assignment_ind</i>
+                </a>
+            </span>
+        </div>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col s12 m7">
+                <general-info [contact]="contact" [properties]="properties" *ngIf="materialize()"></general-info>
+            </div>
+            <div class="col s12 m5">
+                <language [contact]="contact" [show]="properties[1].showCard" (removeCard)="toggleCard($event)"></language>
+                <social-network [contact]="contact" [show]="properties[2].showCard" (removeCard)="toggleCard($event)"></social-network>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <h5 class="title">Contact Info</h5>
+
+        <div class="action">
+            <span [hidden]="properties[3].showCard">
+                <a class="modal-trigger waves-effect btn-flat"
+                   (click)="toggleCard(3)"
+                   [ngClass]="{inconspicuous: properties[3].showCard}">
+                    <i class="material-icons">email</i>
+                </a>
+            </span>
+            <span [hidden]="properties[4].showCard">
+                <a class="modal-trigger waves-effect btn-flat"
+                   (click)="toggleCard(4)"
+                   [ngClass]="{inconspicuous: properties[4].showCard}">
+                    <i class="material-icons">settings_phone</i>
+                </a>
+            </span>
+            <span [hidden]="properties[5].showCard">
+                <a class="modal-trigger waves-effect btn-flat"
+                   (click)="toggleCard(5)"
+                   [ngClass]="{inconspicuous: properties[5].showCard}">
+                    <i class="material-icons">question_answer</i>
+                </a>
+            </span>
+            <span [hidden]="properties[6].showCard">
+                <a class="modal-trigger waves-effect btn-flat"
+                   (click)="toggleCard(6)"
+                   [ngClass]="{inconspicuous: properties[6].showCard}">
+                    <i class="material-icons">room</i>
+                </a>
+            </span>
+        </div>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col s12 m6">
+                <email [contact]="contact" [show]="properties[3].showCard" (removeCard)="toggleCard($event)"></email>
+            </div>
+            <div class="col s12 m6">
+                <telephone [contact]="contact" [show]="properties[4].showCard" (removeCard)="toggleCard($event)"></telephone>
+            </div>
+            <div class="col s12 m6">
+                <messenger [contact]="contact" [show]="properties[5].showCard" (removeCard)="toggleCard($event)"></messenger>
+            </div>
+            <div class="col s12 m12">
+                <address [contact]="contact" [show]="properties[6].showCard" (removeCard)="toggleCard($event)"></address>
+            </div>
+        </div>
+
+        <h6 class="subtitle" *ngIf="false">Cards are hidden</h6>
+    </div>
+
+    <div class="section-header">
+        <h5 class="title">Work Experience</h5>
+
+        <div class="action">
+            <span [hidden]="properties[7].showCard">
+                <a class="modal-trigger waves-effect btn-flat"
+                   (click)="toggleCard(7)"
+                   [ngClass]="{inconspicuous: properties[7].showCard}">
+                    <i class="material-icons">work</i>
+                </a>
+            </span>
+            <span [hidden]="properties[8].showCard">
+                <a class="modal-trigger waves-effect btn-flat"
+                   (click)="toggleCard(8)"
+                   [ngClass]="{inconspicuous: properties[8].showCard}">
+                    <i class="material-icons">dashboard</i>
+                </a>
+            </span>
+        </div>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col s12">
+                <workplace [contact]="contact" [show]="properties[7].showCard" (removeCard)="toggleCard($event)"></workplace>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <skill [contact]="contact" [show]="properties[8].showCard" (removeCard)="toggleCard($event)"></skill>
+            </div>
+        </div>
+
+        <h6 class="subtitle" *ngIf="false">Cards are hidden</h6>
+    </div>
+
+    <div class="section-header">
+        <h5 class="title">Education</h5>
+
+        <div class="action">
+            <span [hidden]="properties[9].showCard">
+                <a class="modal-trigger waves-effect btn-flat"
+                   (click)="toggleCard(9)"
+                   [ngClass]="{inconspicuous: properties[9].showCard}">
+                    <i class="material-icons">business</i>
+                </a>
+            </span>
+        </div>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col s12">
+                <education [contact]="contact" [show]="properties[9].showCard" (removeCard)="toggleCard($event)"></education>
+            </div>
+        </div>
+
+        <h6 class="subtitle" *ngIf="false">Cards are hidden</h6>
+    </div>
+
+    <!--<div class="section-header">-->
+        <!--<h5 class="title">Attachments</h5>-->
+
+        <!--<div class="action">-->
+            <!--<span [hidden]="properties[10].showCard">-->
+                <!--<a class="modal-trigger waves-effect btn-flat"-->
+                   <!--(click)="toggleCard(10)"-->
+                   <!--[ngClass]="{inconspicuous: properties[10].showCard}">-->
+                    <!--<i class="material-icons">library_add</i>-->
+                <!--</a>-->
+            <!--</span>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div>-->
+        <!--<div class="row">-->
+            <!--<div class="col s12">-->
+                <!--<attachment [contact]="contact" [show]="properties[10].showCard" (removeCard)="toggleCard($event)"></attachment>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<h6 class="subtitle" *ngIf="false">Cards are hidden</h6>-->
+    <!--</div>-->
+
+    <div class="section-header">
+        <h5 class="title">Comments</h5>
+
+        <div class="action">
+            <span [hidden]="properties[11].showCard">
+                <a class="modal-trigger waves-effect btn-flat"
+                   (click)="toggleCard(11)"
+                   [ngClass]="{inconspicuous: properties[11].showCard}">
+                    <i class="material-icons">view_headline</i>
+                </a>
+            </span>
+        </div>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col s12">
+                <comment [contact]="contact" [show]="properties[11].showCard" (removeCard)="toggleCard($event)"></comment>
+            </div>
+        </div>
+
+        <h6 class="subtitle" *ngIf="false">Cards are hidden</h6>
+    </div>
+
+    <div *ngFor="let section of navigation">
+        <div *ngIf="section.cards">
+            <div  class="section-header">
+                <h5 class="title">{{section.name}}</h5>
+
+                <div class="action">
+                    <span *ngFor="let i of section.cards" [hidden]="properties[i].showCard">
+                        <a class="modal-trigger waves-effect btn-flat"
+                           (click)="toggleCard(i)"
+                           [ngClass]="{inconspicuous: properties[i].showCard}">
+                            <i class="material-icons">{{properties[i].materialIcons}}</i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <info [indexProp]="i" [contact]="contact" [properties]="properties" [dictionary]="dictionary" (toggleCard)="toggleCard($event)" *ngFor="let i of section.cards"></info>
+            </div>
+            <h6 class="subtitle" *ngIf="!section.showCards">{{section.hiddenCardsMessage}}</h6>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <h5 class="title">Access</h5>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col s12">
+                <access-users [acls]="acls" [contactId]="contact.id"></access-users>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation col hide-on-small-only m3 l2">
+        <ul class="section table-of-contents">
+            <li *ngFor="let nav of navigation">
+                <a href="javascript:void(0)"
+                   [ngClass]="{active: currentNav === nav.field}"
+                   (click)="goToNav(nav.field)">
+                    {{nav.name}}
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="buttons">
+        <button class="cancel" (click)="goToContacts()">
+            <span>CANCEL</span>
+        </button>
+        <button class="save" (click)="save()">
+            <span>SAVE</span>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<div>
+    <span class="window-settings-btn" dropdown>
+        <a href id="settings-dropdown" dropdownToggle>
+            <i class="glyphicon glyphicon-cog"></i>
+        </a>
+        <ul class="dropdown-menu-right" dropdownMenu aria-labelledby="settings-dropdown">
+            <li *ngFor="let item of items">
+                <a class="dropdown-item" href="#" (click)="item.context[item.functionName](itemId)">{{item.title}}</a>
+            </li>
+        </ul>
+    </span>
+</div>

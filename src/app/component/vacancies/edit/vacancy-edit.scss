@@ -1,0 +1,71 @@
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 0;
+  padding: 15px 0 20px 0;
+
+  .cancel, .save {
+    line-height: 40px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    font-weight: 900;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.2);
+    background-color: transparent;
+    width: 140px;
+    margin: 10px;
+    outline: none;
+  }
+
+  .save {
+    &:hover {
+      color: #009688;
+      border-color: #009688;
+    }
+  }
+  .cancel {
+    &:hover {
+      color: #607D8B;
+      border-color: #607D8B;
+    }
+  }
+}
+
+.general-information {
+  form {
+    .input-field {
+      input {
+        font-size: remy(13px);
+        height: 2rem;
+      }
+
+      label {
+        top: 0.5rem;
+        font-size: remy(13px);
+
+        &.active {
+          font-size: remy(12px);
+        }
+
+        &:after {
+          top: 47px;
+        }
+      }
+    }
+
+    .checkbox-list {
+      height: 120px;
+      overflow: auto;
+    }
+
+    .row:last-child .input-field input {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.vacancy-edit-grid{
+  min-height: 100vh;
+  padding-top: 52px;
+  padding-bottom: 20px;
+  background-color: #fafafa;
+}

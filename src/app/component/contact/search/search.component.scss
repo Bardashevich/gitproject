@@ -1,0 +1,45 @@
+@import "../../../../public/css/color";
+
+:host {
+  display: inline-flex;
+  margin-top: 0;
+  justify-content: flex-end;
+}
+
+@each $c in map-keys($colors) {
+  :host.#{$c} {
+    .input-field input {
+      &:active, &:focus {
+        border-bottom: 1px solid map-deep-get($colors, #{$c}, 800);
+        box-shadow: 0 1px 0 0 map-deep-get($colors, #{$c}, 800);
+      }
+    }
+  }
+}
+
+.input-field {
+  display: inline-flex;
+  margin-top: 0;
+
+  input {
+    margin-left: 5px;
+    margin-bottom: 0;
+    padding-left: 20px;
+    height: 30px;
+    border-bottom: 1px solid #CFD8DC;
+
+    &:active, &:focus {
+      border-bottom: 1px solid #0277BD;
+      box-shadow: 0 1px 0 0 #0277BD;
+    }
+
+  }
+
+  i {
+    font-size: 1.3rem;
+    line-height: inherit;
+    color: map-deep-get($colors, blue-grey, 700);
+    margin-top: 8px;
+    cursor: pointer;
+  }
+}

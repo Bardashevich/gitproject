@@ -1,0 +1,178 @@
+:host {
+  display: block;
+  flex: 1 1 0;
+}
+
+.login-form {
+  @import "../../../public/css/color";
+
+  @each $c in map-keys($colors) {
+    .container.#{$c} {
+      .card {
+        .card-header .card-title {
+          border-left: 5px solid map-deep-get($colors, #{$c}, 600);
+          color: map-deep-get($colors, #{$c}, 600);
+
+        }
+      }
+
+      .logo-container,
+      .sub-logo-container {
+        background-color: map-deep-get($colors, #{$c}, 600);
+      }
+
+      form {
+        button {
+          &:hover,
+          &:active,
+          &:focus {
+            border-color: map-deep-get($colors, #{$c}, 600);
+            color: map-deep-get($colors, #{$c}, 600);
+          }
+        }
+      }
+    }
+
+    .bubble.#{$c} {
+      fill: map-deep-get($colors, #{$c}, 600);
+    }
+  }
+
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -225px;
+    margin-left: -206px;
+    width: 412px;
+    background-color: transparent !important;
+    z-index: 1010;
+  }
+
+  .card:first-child {
+    height: 10px;
+    margin: -0 10px -0.5rem;
+    padding: 0;
+    border-radius: 5px 5px 0 0;
+    opacity: .8;
+  }
+
+  .card {
+    padding: 30px 0 30px 0;
+    border-radius: 5px;
+
+    .card-header {
+      display: flex;
+
+      .card-title {
+        border-left: 5px solid #ed2553;
+        margin: 0 0 30px;
+        padding: 10px 0 10px 50px;
+        color: #ed2553;
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+    }
+
+    .logo-container {
+      position: absolute;
+      top: 25px;
+      right: -40px;
+      width: 80px;
+      height: 80px;
+      border-radius: 100%;
+      background-color: #ed2553;
+    }
+
+    form {
+      margin-bottom: 0;
+      padding: 0 60px;
+
+      .input-field {
+        input {
+          margin-bottom: 10px;
+
+          &:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 1000px map-deep-get($colors, yellow, 50) inset;
+          }
+        }
+      }
+
+      .check-box-field {
+        margin-bottom: 40px;
+
+        label {
+          font-size: 14px;
+        }
+      }
+
+      button {
+        outline: 0;
+        cursor: pointer;
+        background: 0;
+        width: 100%;
+        border: 2px solid map-deep-get($colors, grey, 300);
+        color: map-deep-get($colors, grey, 300);
+        padding: 14px 0;
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1;
+        text-transform: uppercase;
+        overflow: hidden;
+        transition: .3s ease;
+
+        &:hover,
+        &:active,
+        &:focus {
+          border-color: #ed2553;
+          color: #ed2553;
+        }
+      }
+    }
+  }
+
+  .logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2.5em;
+    height: 2.5em;
+    margin-left: -1.25rem;
+    margin-top: -1.25rem;
+    animation: bounceIn 0.6s;
+    transform: rotate(0deg) scale(1) translateZ(0);
+    transition: all 0.4s cubic-bezier(.8, 1.8, .75, .75);
+    cursor: pointer;
+
+    &:hover {
+      transform: rotate(10deg) scale(1.1);
+    }
+  }
+
+  .icon {
+    fill: #fff;
+  }
+
+  @keyframes bounceIn {
+    0% {
+      opacity: 1;
+      transform: scale(.3);
+    }
+
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    70% {
+      opacity: 1;
+      transform: scale(.9);
+    }
+
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}

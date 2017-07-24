@@ -1,0 +1,51 @@
+@import "../../../../../../public/css/color";
+
+@function remy($value) {
+  @return ($value / 16px) * 1rem;
+}
+
+:host {
+  display: block;
+  padding-top: 5px;
+  background-color: white;
+}
+
+.row {
+  margin-bottom: 0;
+}
+
+.card .card-content .card-title {
+  font-size: 20px;
+  line-height: 40px;
+}
+
+.card-header {
+  display: flex;
+
+  .action {
+    margin-left: auto;
+  }
+}
+
+.card-body {
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.card-header + .card-body {
+  margin-top: 20px;
+}
+
+.container {
+  background-color: transparent !important;
+}
+
+.error-message{
+  color: map-deep-get($colors, red, 500);
+}
+
+.chips{
+  margin-bottom: 5px;
+}

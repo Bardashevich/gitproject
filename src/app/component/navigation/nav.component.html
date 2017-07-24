@@ -1,0 +1,22 @@
+<div class="navigation-component" [ngClass]="[colorClass, isInverse ? 'inverse' : '']" *ngIf="userIsLogged()">
+    <nav class="navbar">
+        <div class="container">
+            <ul class="nav">
+                <li *ngFor="let tab of tabs"
+                    (click)="setTab(tab)" [ngClass]="getClassForUrl(tab[2])">
+                    <a routerLink="{{tab[2]}}" *ngIf="userHasAnyRole(tab[1])">{{tab[0]}}</a>
+                </li>
+            </ul>
+
+            <logo (update)="passColor($event.colorClass)" *ngIf="userIsLogged()"></logo>
+
+            <div class="profile-picture-container" *ngIf="userIsLogged()">
+                <img class="img-circle img-fluid"
+                     [src]="getUserPhotoUrl() ? getUserPhotoUrl() : 'assets/images/default-avatar.png'"
+                     (click)="toggleDropdownProfile()">
+
+                <dropdown-profile [(showDropdownProfile)]="showDropdownProfile"></dropdown-profile>
+            </div>
+        </div>
+    </nav>
+</div>

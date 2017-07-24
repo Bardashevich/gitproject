@@ -1,0 +1,121 @@
+<div class="info-form">
+<div class="info-table">
+<div [class]="properties[indexProp].classCol">
+<div class="card z-depth-1" *ngIf="properties[indexProp].showCard" [@enterAnimation]="properties[indexProp].showCard">
+    <div class="card-content">
+        <div class="card-header">
+            <span class="card-title">{{properties[indexProp].card}}</span>
+            <div class="action">
+                <a class="modal-trigger waves-effect btn-flat" (click)="mark()">
+                    <i class="material-icons">done</i>
+                </a>
+                <a class="modal-trigger waves-effect btn-flat" (click)="add()">
+                    <i class="material-icons">add</i>
+                </a>
+                <a class="modal-trigger waves-effect btn-flat" (click)="toggleCardChild(indexProp)">
+                    <i class="material-icons">clear</i>
+                </a>
+            </div>
+        </div>
+        <div class="card-header" *ngIf="isAnyChecked()">
+            <span class="card-title">{{countSelectedItems}} item(s) selected</span>
+            <div class="action">
+                <a class="modal-trigger waves-effect btn-flat" (click)="remove()">
+                    <i class="material-icons">delete</i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <table class="highlight" *ngIf="isNotEmpty()">
+        <thead>
+        <tr >
+            <th style="width: 3%" (click)="toggleAll()"  *ngIf="isMark()" >
+                <p>
+                    <input type="checkbox" class="filled-in" [checked]="isAllChecked()">
+                    <label></label>
+                </p>
+            </th>
+            <th *ngFor="let field of properties[indexProp].fields" >
+                {{field.name}}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let u of contact[properties[indexProp].data]; let i = index;"
+            (click)="toggleSelection(u)">
+            <div *ngIf="!u.dateDeleted">
+                <td *ngIf="isMark()" >
+                    <p>
+                        <input type="checkbox" class="filled-in" [(ngModel)]="u.selected">
+                        <label></label>
+                    </p>
+                </td>
+                <td *ngFor="let field of properties[indexProp].fields" (click)="edit(i)">
+                    <div [ngSwitch]="field.type">
+                        <div *ngSwitchCase="'select'">{{u[field.field] | select: dictionary[field.selectOptions]}}
+                        </div>
+                        <div *ngSwitchCase="'text'">{{u[field.field]}}
+                        </div>
+                        <div *ngSwitchCase="'date'">{{u[field.field] | date: 'd MMMM, y'}}
+                        </div>
+                        <div *ngSwitchCase="'textarea'">{{u[field.field]}}
+                        </div>
+                    </div>
+                </td>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+    <table class="highlight" *ngIf="isEditFields()">
+        <thead>
+        <tr >
+            <th *ngFor="let field of properties[indexProp].fields" >
+                {{field.name}}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td *ngFor="let field of properties[indexProp].fields">
+                <div [ngSwitch]="field.type">
+                    <div *ngSwitchCase="'select'">
+                        <select
+                                [(ngModel)]="editContactFields[field.field]"
+                                materialize="material_select"
+                                [materializeSelectOptions]="dictionary[field.selectOptions]">
+                            <option *ngFor="let option of dictionary[field.selectOptions]" [value]="option | optionPipe: 'id'">{{option | optionPipe: 'value'}}</option>
+                        </select>
+                    </div>
+                    <div *ngSwitchCase="'text'">
+                        <input class="validate input-height-margin crm-font-size"
+                               type="text"
+                               [(ngModel)]="editContactFields[field.field]">
+                    </div>
+                    <div *ngSwitchCase="'date'">
+                        <input materialize="pickadate"
+                               [materializeParams]="[{selectMonths: true, selectYears: 150}]"
+                               class="datepicker input-height-margin crm-font-size"
+                               type="text"
+                               [value]="editContactFields[field.field] | date: 'd MMMM, y'">
+                    </div>
+                    <div *ngSwitchCase="'textarea'">
+                        <textarea
+                                class="materialize-textarea input-height-margin crm-font-size"
+                                [(ngModel)]="editContactFields[field.field]">
+                        </textarea>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a class="modal-trigger waves-effect btn-flat" *ngIf="isEditFields()" (click)="toggleSave()">
+        <i class="material-icons">add</i>
+    </a>
+    <div class="card-action" *ngIf="isEdit()">
+        <a href="javascript:void(0)" (click)="save()">Save</a>
+    </div>
+</div>
+</div>
+</div>
+</div>

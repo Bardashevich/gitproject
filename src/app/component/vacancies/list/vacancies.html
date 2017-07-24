@@ -1,0 +1,119 @@
+<div class="vacancy-grid" [@mode]="'table'">
+    <div class="card-container width-950px">
+        <div class="material-table" [ngClass]="colorClass">
+            <div class="table-header">
+                <span class="table-title">Vacancies</span>
+                <div class="actions">
+                    <search-input (searchContact)="searchVacancy($event)"></search-input>
+                    <a class="modal-trigger waves-effect btn-flat nopadding">
+                        <i class="material-icons" (click)="add()">add_box</i>
+                    </a>
+                </div>
+            </div>
+            <div class="row" *ngIf="!isAnyChecked()">
+                <div class="actions">
+                    <div class="input-field col s1"></div>
+                    <div class="input-field col s4">
+                        <select materialize="material_select" (change)="changePeriod($event.target.value)" [materializeSelectOptions]="periodArray">
+                            <option *ngFor="let option of periodArray" [value]="option.value">{{option.name}}</option>
+                        </select>
+                    </div>
+                    <div class="input-field col s4"></div>
+                    <div class="input-field col s3">
+                        <input id="show_close_checkbox" type="checkbox" [(ngModel)]="vacancyFilter.showClosed" (ngModelChange)="find()">
+                        <label for="show_close_checkbox">Show Closed</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-header-action" *ngIf="isAnyChecked()">
+                <span class="table-title">{{countSelectedItems}} item(s) selected</span>
+                <div class="actions">
+                    <a class="modal-trigger waves-effect btn-flat nopadding">
+                        <i class="material-icons">check</i>
+                    </a>
+                    <a class="modal-trigger waves-effect btn-flat nopadding" (click)="deleteVacancies()">
+                        <i class="material-icons">delete</i>
+                    </a>
+                </div>
+            </div>
+
+            <table class="highlight">
+                <thead>
+                <tr>
+                    <th style="..." class="custom-margin">
+                        <p (click)="toggleAll()">
+                            <input type="checkbox" class="filled-in" [checked]="isAllChecked()">
+                            <label></label>
+                        </p>
+                    </th>
+                    <th style="width: 36%" (click)="sortColumn('positionName')">
+                        Position Name
+                        <i class="material-icons" style="transform: rotate(-90deg); opacity: .6;"
+                           *ngIf="vacancyFilter.sortProperty != 'positionName'">code</i>
+                        <i class="material-icons"
+                           *ngIf="vacancyFilter.sortProperty == 'positionName' && vacancyFilter.sortAsc">arrow_downward</i>
+                        <i class="material-icons"
+                           *ngIf="vacancyFilter.sortProperty == 'positionName' && !vacancyFilter.sortAsc">arrow_upward</i>
+
+                    </th>
+                    <th style="width: 29%" (click)="sortColumn('status')">
+                        Status
+                        <i class="material-icons" style="transform: rotate(-90deg); opacity: .6;"
+                           *ngIf="vacancyFilter.sortProperty != 'status'">code</i>
+                        <i class="material-icons"
+                           *ngIf="vacancyFilter.sortProperty == 'status' && vacancyFilter.sortAsc">arrow_downward</i>
+                        <i class="material-icons"
+                           *ngIf="vacancyFilter.sortProperty == 'status' && !vacancyFilter.sortAsc">arrow_upward</i>
+                    </th>
+                    <th style="width: 29%" (click)="sortColumn('openDate')">
+                        Open Date
+                        <i class="material-icons" style="transform: rotate(-90deg); opacity: .6;"
+                           *ngIf="vacancyFilter.sortProperty != 'openDate'">code</i>
+                        <i class="material-icons"
+                           *ngIf="vacancyFilter.sortProperty == 'openDate' && vacancyFilter.sortAsc">arrow_downward</i>
+                        <i class="material-icons"
+                           *ngIf="vacancyFilter.sortProperty == 'openDate' && !vacancyFilter.sortAsc">arrow_upward</i>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let vacancy of vacancies" [ngClass]="{selected: vacancy.selected}"
+                    (click)="toggleSelection(vacancy)" (dblclick)="edit(vacancy)"
+                    >
+                    <td>
+                        <p class="custom-margin">
+                            <input type="checkbox" class="filled-in" [(ngModel)]="vacancy.selected">
+                            <label></label>
+                        </p>
+                    </td>
+                    <td>{{vacancy.positionName}}</td>
+                    <td>{{vacancy.status}}</td>
+                    <td>{{vacancy.openDate | date: 'y.MM.dd'}}</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="table-footer">
+                <span *ngIf="vacancies.length > 0">
+                    {{vacancyFilter.from + 1}} - {{(vacancyFilter.from + COUNT_VACANCIES) > totalCount ? totalCount : vacancyFilter.from + COUNT_VACANCIES}} of {{totalCount}}
+                </span>
+
+                <ul class="pagination">
+                    <li [ngClass]="{'disabled': currentPage === 1, 'waves-effect': currentPage != 1}">
+                        <a (click)="currentPage != 1 ? changePage(currentPage - 1) : ''"><i class="material-icons">chevron_left</i></a>
+                    </li>
+                    <li *ngFor="let index of pageIndexes" [ngClass]="{active: currentPage === index}">
+                        <a (click)="changePage(index)">{{index}}</a>
+                    </li>
+                    <li [ngClass]="{'disabled': currentPage === countPage, 'waves-effect': currentPage != countPage}">
+                        <a (click)="currentPage != countPage ? changePage(currentPage + 1) : ''">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

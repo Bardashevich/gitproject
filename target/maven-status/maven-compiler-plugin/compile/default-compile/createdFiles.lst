@@ -1,0 +1,7 @@
+com\itechart\mongoparser\model\MongoQuery.class
+com\itechart\mongoparser\MongoParserApplication.class
+com\itechart\mongoparser\service\mongoAdapter\MongoAdapterServiceImpl.class
+com\itechart\mongoparser\model\ParsedQuery.class
+com\itechart\mongoparser\service\mongoAdapter\MongoAdapterService.class
+com\itechart\mongoparser\controller\MongoAdapterController.class
+com\itechart\mongoparser\util\SqlParserUtil.class
